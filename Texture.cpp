@@ -1,5 +1,14 @@
 #include "Texture.h"
 
+Texture::Texture()
+{
+	//Initialize
+	mTexture = NULL;
+	gRenderer = NULL;
+	mWidth = 0;
+	mHeight = 0;
+}
+
 Texture::Texture(SDL_Renderer* rend)
 {
 	//Initialize

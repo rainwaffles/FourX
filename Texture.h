@@ -7,6 +7,7 @@ class Texture
 {
 	public:
 		//Initializes variables
+		Texture();
 		Texture(SDL_Renderer* rend);
 
 		//Deallocates memory
