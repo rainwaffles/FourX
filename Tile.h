@@ -13,7 +13,7 @@ class Tile
 		~Tile();
 
 		//Renders with the renderer the tile on the right X and Y
-		int render();
+		void render();
 		void setRenderer(SDL_Renderer* rend);
 
 		//Deallocates all the stuff that should be deallocated, ie. texture
@@ -45,4 +45,4 @@ class Tile
 			2: Square
 			3: Pentagon
 		*/
-}
+};
