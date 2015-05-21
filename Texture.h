@@ -1,3 +1,7 @@
+#pragma once
+#ifndef TEXTURE_H
+#define TEXTURE_H
+
 #include <SDL.h>
 #include <SDL_image.h>
 #include <stdio.h>
@@ -37,6 +41,8 @@ class Texture
 		int getWidth();
 		int getHeight();
 
+		bool hasTex();
+
 	private:
 		//The actual hardware texture
 		SDL_Texture* mTexture;
@@ -48,3 +54,5 @@ class Texture
 		int mWidth;
 		int mHeight;
 };
+
+#endif

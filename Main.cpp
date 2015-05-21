@@ -7,6 +7,7 @@ and may not be redistributed without written permission.*/
 #include <stdio.h>
 #include <string>
 #include "Texture.h"
+#include "Tile.h"
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
@@ -135,6 +136,8 @@ int main( int argc, char* args[] )
 			//Current animation frame
 			int frame = 0;
 
+			Tile test(1, gRenderer, 0, 0);
+
 			//While application is running
 			while( !quit )
 			{
@@ -153,6 +156,7 @@ int main( int argc, char* args[] )
 				SDL_RenderClear( gRenderer );
 
 				//Render current frame
+				test.render();
 
 				//Update screen
 				SDL_RenderPresent( gRenderer );
@@ -160,11 +164,13 @@ int main( int argc, char* args[] )
 				//Go to next frame
 				++frame;
 			}
+			delete test;
 		}
 	}
 
 	//Free resources and close SDL
 	//SDL_Delay( 2000 );
+
 	close();
 
 	return 0;

@@ -2,11 +2,7 @@
 
 Texture::Texture()
 {
-	//Initialize
-	mTexture = NULL;
-	gRenderer = NULL;
-	mWidth = 0;
-	mHeight = 0;
+	Texture(NULL);
 }
 
 Texture::Texture(SDL_Renderer* rend)
@@ -124,4 +120,9 @@ int Texture::getWidth()
 int Texture::getHeight()
 {
 	return mHeight;
+}
+
+bool Texture::hasTex()
+{
+	return (mTexture != NULL);
 }

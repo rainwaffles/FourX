@@ -1,3 +1,7 @@
+#pragma once
+#ifndef TILE_H
+#define TILE_H
+
 #include <SDL.h>
 #include <SDL_image.h>
 #include <stdio.h>
@@ -9,12 +13,13 @@ class Tile
 	public:
 		//Constructor 
 		Tile(int t, SDL_Renderer* rend, int x, int y);
+		Tile(int t, int x, int y);
 		//Deconstuctor (just calls free())
 		~Tile();
 
 		//Renders with the renderer the tile on the right X and Y
 		void render();
-		void setRenderer(SDL_Renderer* rend);
+		static void setRenderer(SDL_Renderer* rend);
 
 		//Deallocates all the stuff that should be deallocated, ie. texture
 		void free();
@@ -30,12 +35,17 @@ class Tile
 		//Changes type, to be used when a tile is conquered
 		int changeType(int newType);
 
-		//This is where we add other stuff that determine the composition of a tile, \
-		  such as terrain, units, income, resources, ect. \
-		  FYI placing a backslash before a new line continues the comment.
+		static void setClips();
+
+		/*
+			This is where we add other stuff that determine the composition of a tile, 
+			such as terrain, units, income, resources, ect. 
+		*/
 
 	private:
-		Texture tTex;
+		static std::string imgPath;
+		static SDL_Rect* spriteClips[ 4 ];
+		static Texture tTex;
 		int posX, posY;
 		int width, height;
 		int type;
@@ -46,3 +56,5 @@ class Tile
 			3: Pentagon
 		*/
 };
+
+#endif
