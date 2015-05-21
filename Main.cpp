@@ -149,6 +149,9 @@ int main( int argc, char* args[] )
 					{
 						quit = true;
 					}
+
+					//Handle button events
+					test.handleEvent( &e );
 				}
 
 				//Clear screen

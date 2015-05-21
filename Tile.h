@@ -35,6 +35,9 @@ class Tile
 		//Changes type, to be used when a tile is conquered
 		int changeType(int newType);
 
+		//Takes in an SDL event and processes it.
+		void handleEvent(SDL_Event* e);
+
 		static void setClips();
 
 		/*
@@ -49,7 +52,7 @@ class Tile
 		static int instances;
 
 		int posX, posY;
-		int width, height;
+		static int width, height;
 		int type;
 		/*
 			0: Unclaimed
