@@ -8,6 +8,8 @@
 #include <string>
 #include "Texture.h"
 
+
+
 class Tile
 {
 	public:
@@ -44,6 +46,14 @@ class Tile
 			This is where we add other stuff that determine the composition of a tile, 
 			such as terrain, units, income, resources, ect. 
 		*/
+
+		enum TileType
+		{
+			UNCLAIMED,
+			TRIANGLE,
+			SQUARE,
+			PENTAGON
+		};
 
 	private:
 		static std::string imgPath;

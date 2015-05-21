@@ -7,6 +7,7 @@ int Tile::instances = 0;
 int Tile::width = 30;
 int Tile::height = 30;
 
+
 Tile::Tile(int t, SDL_Renderer* rend, int x, int y) : posX(x), posY(y)
 {
 	setRenderer(rend);
@@ -41,29 +42,29 @@ void Tile::setRenderer(SDL_Renderer* rend)
 
 void Tile::setClips()
 {
-	Tile::spriteClips[0] = new SDL_Rect();
-	Tile::spriteClips[0]->x = 90;
-	Tile::spriteClips[0]->y = 0;
-	Tile::spriteClips[0]->w = 30;
-	Tile::spriteClips[0]->h = 30;
+	Tile::spriteClips[UNCLAIMED] = new SDL_Rect();
+	Tile::spriteClips[UNCLAIMED]->x = 90;
+	Tile::spriteClips[UNCLAIMED]->y = 0;
+	Tile::spriteClips[UNCLAIMED]->w = 30;
+	Tile::spriteClips[UNCLAIMED]->h = 30;
 
-	Tile::spriteClips[1] = new SDL_Rect();
-	Tile::spriteClips[1]->x = 60;
-	Tile::spriteClips[1]->y = 0;
-	Tile::spriteClips[1]->w = 30;
-	Tile::spriteClips[1]->h = 30;
+	Tile::spriteClips[TRIANGLE] = new SDL_Rect();
+	Tile::spriteClips[TRIANGLE]->x = 60;
+	Tile::spriteClips[TRIANGLE]->y = 0;
+	Tile::spriteClips[TRIANGLE]->w = 30;
+	Tile::spriteClips[TRIANGLE]->h = 30;
 	
-	Tile::spriteClips[2] = new SDL_Rect();
-	Tile::spriteClips[2]->x = 0;
-	Tile::spriteClips[2]->y = 0;
-	Tile::spriteClips[2]->w = 30;
-	Tile::spriteClips[2]->h = 30;
+	Tile::spriteClips[SQUARE] = new SDL_Rect();
+	Tile::spriteClips[SQUARE]->x = 0;
+	Tile::spriteClips[SQUARE]->y = 0;
+	Tile::spriteClips[SQUARE]->w = 30;
+	Tile::spriteClips[SQUARE]->h = 30;
 	
-	Tile::spriteClips[3] = new SDL_Rect();
-	Tile::spriteClips[3]->x = 30;
-	Tile::spriteClips[3]->y = 0;
-	Tile::spriteClips[3]->w = 30;
-	Tile::spriteClips[3]->h = 30;
+	Tile::spriteClips[PENTAGON] = new SDL_Rect();
+	Tile::spriteClips[PENTAGON]->x = 30;
+	Tile::spriteClips[PENTAGON]->y = 0;
+	Tile::spriteClips[PENTAGON]->w = 30;
+	Tile::spriteClips[PENTAGON]->h = 30;
 }
 
 

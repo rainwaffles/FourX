@@ -86,12 +86,10 @@ bool init()
 
 bool loadMedia()
 {
-	//Test image
-
 	//Loading success flag
 	bool success = true;
 
-	//This is where you load the tile images and stuff
+	//This is where you load images and stuff
 	
 	return success;
 }
@@ -136,7 +134,7 @@ int main( int argc, char* args[] )
 			//Current animation frame
 			int frame = 0;
 
-			Tile test(1, gRenderer, 0, 0);
+			Tile test(Tile::TRIANGLE, gRenderer, 0, 0);
 
 			//While application is running
 			while( !quit )
