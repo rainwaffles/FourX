@@ -164,7 +164,6 @@ int main( int argc, char* args[] )
 				//Go to next frame
 				++frame;
 			}
-			delete test;
 		}
 	}
 

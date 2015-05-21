@@ -1,18 +1,22 @@
 #include "Tile.h"
 
-std::string Tile::imgPath = "./imgs/tiles";
+std::string Tile::imgPath = "./imgs/tiles.png";
 SDL_Rect* Tile::spriteClips[ 4 ];
 Texture Tile::tTex;
+int Tile::instances = 0;
 
 Tile::Tile(int t, SDL_Renderer* rend, int x, int y) : posX(x), posY(y)
 {
 	setRenderer(rend);
 	changeType(t);
+	Tile::instances++;
 }
 
 Tile::Tile(int t, int x, int y) : posX(x), posY(y)
 {
+	if(instances <= 0) { setRenderer(NULL); }
 	changeType(t);
+	Tile::instances++;
 }
 
 Tile::~Tile()
@@ -27,12 +31,12 @@ void Tile::render()
 
 void Tile::setRenderer(SDL_Renderer* rend)
 {
-	if(!Tile::tTex.hasTex())
+	Tile::tTex.setRenderer(rend);
+	if(Tile::instances <= 0 || !Tile::tTex.hasTex())
 	{
 		Tile::tTex.loadFromFile(imgPath);
 		setClips();
 	}
-	Tile::tTex.setRenderer(rend);
 }
 
 void Tile::setClips()
@@ -65,10 +69,14 @@ void Tile::setClips()
 
 void Tile::free()
 {
-	tTex.free();
-	for(int i = 0; i < 4; i++)
+	instances--;
+	if(instances <= 0)
 	{
-		delete *Tile::spriteClips[i];
+		Tile::tTex.free();
+		for(int i = 0; i < 4; i++)
+		{
+			delete Tile::spriteClips[i];
+		}
 	}
 }
 

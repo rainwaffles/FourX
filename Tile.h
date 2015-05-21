@@ -46,6 +46,8 @@ class Tile
 		static std::string imgPath;
 		static SDL_Rect* spriteClips[ 4 ];
 		static Texture tTex;
+		static int instances;
+
 		int posX, posY;
 		int width, height;
 		int type;
