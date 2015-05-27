@@ -8,10 +8,18 @@ and may not be redistributed without written permission.*/
 #include <string>
 #include "Texture.h"
 #include "Tile.h"
+#include "Map.h"
+#include "Window.h"
 
+/*
 //Screen dimension constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+const int TILES_X = 40;
+const int TILES_Y = 20;
+const int TILE_SIZE_X = 30;
+const int TILE_SIZE_Y = 30;
+const int SCREEN_WIDTH = TILES_X*TILE_SIZE_X;
+const int SCREEN_HEIGHT = TILES_Y*TILE_SIZE_Y;
+*/
 
 //Starts up SDL and creates window
 bool init();
@@ -22,11 +30,18 @@ bool loadMedia();
 //Frees media and shuts down SDL
 void close();
 
+/*
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;
 
 //The window renderer
 SDL_Renderer* gRenderer = NULL;
+
+//The tiles
+Tile *tiles[TILES_X][TILES_Y];
+*/
+
+Map *mainMap;
 
 bool init()
 {
@@ -50,15 +65,18 @@ bool init()
 		}
 
 		//Create window
-		gWindow = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
-		if( gWindow == NULL )
+		//gWindow = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+		mainMap = new Map();
+		if( !mainMap->init() )
 		{
 			printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
 			success = false;
 		}
+		/*
 		else
 		{
 			//Create vsynced renderer for window
+			
 			gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
 			if( gRenderer == NULL )
 			{
@@ -78,11 +96,29 @@ bool init()
 					success = false;
 				}
 			}
+			
 		}
+		*/
 	}
+
+	//Tile::init(gRenderer);
 
 	return success;
 }
+
+/*
+bool loadTiles()
+{
+	for(int i = 0; i < TILES_X; i++)
+	{
+		for(int j = 0; j < TILES_Y; j++)
+		{
+			tiles[i][j] = new Tile(1, gRenderer, i*TILE_SIZE_X, j*TILE_SIZE_Y);
+		}
+	}
+	return true;
+}
+*/
 
 bool loadMedia()
 {
@@ -90,19 +126,33 @@ bool loadMedia()
 	bool success = true;
 
 	//This is where you load images and stuff
-	
+	//success = loadTiles();
+
 	return success;
 }
 
 void close()
 {
-	//Free loaded images
+	/*
+	//Free loaded stuff
+	for(int i = 0; i < TILES_X; i++)
+	{
+		for(int j = 0; j < TILES_Y; j++)
+		{
+			delete tiles[i][j];
+		}
+	}
+	*/
 
+	/*
 	//Destroy window	
 	SDL_DestroyRenderer( gRenderer );
 	SDL_DestroyWindow( gWindow );
 	gWindow = NULL;
 	gRenderer = NULL;
+	*/
+	mainMap->free();
+	delete mainMap;
 
 	//Quit SDL subsystems
 	IMG_Quit();
@@ -134,8 +184,6 @@ int main( int argc, char* args[] )
 			//Current animation frame
 			int frame = 0;
 
-			Tile test(Tile::TRIANGLE, gRenderer, 0, 0);
-
 			//While application is running
 			while( !quit )
 			{
@@ -149,18 +197,40 @@ int main( int argc, char* args[] )
 					}
 
 					//Handle button events
-					test.handleEvent( &e );
+					/*
+					for(int i = 0; i < TILES_X; i++)
+					{
+						for(int j = 0; j < TILES_Y; j++)
+						{
+							tiles[i][j]->handleEvent(&e);
+						}
+					}
+					*/
+					mainMap->handleEvent(e);
 				}
 
 				//Clear screen
+				/*
 				SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 				SDL_RenderClear( gRenderer );
+				*/
 
 				//Render current frame
-				test.render();
+				/*
+				for(int i = 0; i < TILES_X; i++)
+				{
+					for(int j = 0; j < TILES_Y; j++)
+					{
+						tiles[i][j]->render();
+					}
+				}
+				*/
+				mainMap->render();
 
 				//Update screen
+				/*
 				SDL_RenderPresent( gRenderer );
+				*/
 
 				//Go to next frame
 				++frame;

@@ -7,7 +7,6 @@ int Tile::instances = 0;
 int Tile::width = 30;
 int Tile::height = 30;
 
-
 Tile::Tile(int t, SDL_Renderer* rend, int x, int y) : posX(x), posY(y)
 {
 	setRenderer(rend);
@@ -17,7 +16,8 @@ Tile::Tile(int t, SDL_Renderer* rend, int x, int y) : posX(x), posY(y)
 
 Tile::Tile(int t, int x, int y) : posX(x), posY(y)
 {
-	Tile(t, NULL, x, y);
+	changeType(t);
+	Tile::instances++;
 }
 
 Tile::~Tile()
@@ -33,11 +33,13 @@ void Tile::render()
 void Tile::setRenderer(SDL_Renderer* rend)
 {
 	Tile::tTex.setRenderer(rend);
-	if(Tile::instances <= 0 || !Tile::tTex.hasTex())
-	{
-		Tile::tTex.loadFromFile(imgPath);
-		setClips();
-	}
+}
+
+void Tile::init(SDL_Renderer* rend)
+{
+	tTex.setRenderer(rend);
+	tTex.loadFromFile(Tile::imgPath);
+	setClips();
 }
 
 void Tile::setClips()
@@ -66,7 +68,6 @@ void Tile::setClips()
 	Tile::spriteClips[PENTAGON]->w = 30;
 	Tile::spriteClips[PENTAGON]->h = 30;
 }
-
 
 void Tile::free()
 {
@@ -114,8 +115,8 @@ void Tile::handleEvent(SDL_Event* e)
 	{
 		int x, y;
 		SDL_GetMouseState(&x, &y);
-		if(x > posX && x < posX + width &&
-		   y > posY && y < posY + height)
+		if(x > getX() && x < getX() + getWidth() &&
+		   y > getY() && y < getY() + getHeight())
 		{
 			printf("CLICKED\n");
 		}

@@ -8,8 +8,6 @@
 #include <string>
 #include "Texture.h"
 
-
-
 class Tile
 {
 	public:
@@ -21,6 +19,7 @@ class Tile
 
 		//Renders with the renderer the tile on the right X and Y
 		void render();
+		static void init(SDL_Renderer* rend);
 		static void setRenderer(SDL_Renderer* rend);
 
 		//Deallocates all the stuff that should be deallocated, ie. texture
