@@ -19,6 +19,7 @@ class Tile
 
 		//Renders with the renderer the tile on the right X and Y
 		void render();
+		static void init(SDL_Renderer* rend);
 		static void setRenderer(SDL_Renderer* rend);
 
 		//Deallocates all the stuff that should be deallocated, ie. texture
@@ -44,6 +45,14 @@ class Tile
 			This is where we add other stuff that determine the composition of a tile, 
 			such as terrain, units, income, resources, ect. 
 		*/
+
+		enum TileType
+		{
+			UNCLAIMED,
+			TRIANGLE,
+			SQUARE,
+			PENTAGON
+		};
 
 	private:
 		static std::string imgPath;

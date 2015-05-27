@@ -16,7 +16,8 @@ Tile::Tile(int t, SDL_Renderer* rend, int x, int y) : posX(x), posY(y)
 
 Tile::Tile(int t, int x, int y) : posX(x), posY(y)
 {
-	Tile(t, NULL, x, y);
+	changeType(t);
+	Tile::instances++;
 }
 
 Tile::~Tile()
@@ -32,40 +33,41 @@ void Tile::render()
 void Tile::setRenderer(SDL_Renderer* rend)
 {
 	Tile::tTex.setRenderer(rend);
-	if(Tile::instances <= 0 || !Tile::tTex.hasTex())
-	{
-		Tile::tTex.loadFromFile(imgPath);
-		setClips();
-	}
+}
+
+void Tile::init(SDL_Renderer* rend)
+{
+	tTex.setRenderer(rend);
+	tTex.loadFromFile(Tile::imgPath);
+	setClips();
 }
 
 void Tile::setClips()
 {
-	Tile::spriteClips[0] = new SDL_Rect();
-	Tile::spriteClips[0]->x = 90;
-	Tile::spriteClips[0]->y = 0;
-	Tile::spriteClips[0]->w = 30;
-	Tile::spriteClips[0]->h = 30;
+	Tile::spriteClips[UNCLAIMED] = new SDL_Rect();
+	Tile::spriteClips[UNCLAIMED]->x = 90;
+	Tile::spriteClips[UNCLAIMED]->y = 0;
+	Tile::spriteClips[UNCLAIMED]->w = 30;
+	Tile::spriteClips[UNCLAIMED]->h = 30;
 
-	Tile::spriteClips[1] = new SDL_Rect();
-	Tile::spriteClips[1]->x = 60;
-	Tile::spriteClips[1]->y = 0;
-	Tile::spriteClips[1]->w = 30;
-	Tile::spriteClips[1]->h = 30;
+	Tile::spriteClips[TRIANGLE] = new SDL_Rect();
+	Tile::spriteClips[TRIANGLE]->x = 60;
+	Tile::spriteClips[TRIANGLE]->y = 0;
+	Tile::spriteClips[TRIANGLE]->w = 30;
+	Tile::spriteClips[TRIANGLE]->h = 30;
 	
-	Tile::spriteClips[2] = new SDL_Rect();
-	Tile::spriteClips[2]->x = 0;
-	Tile::spriteClips[2]->y = 0;
-	Tile::spriteClips[2]->w = 30;
-	Tile::spriteClips[2]->h = 30;
+	Tile::spriteClips[SQUARE] = new SDL_Rect();
+	Tile::spriteClips[SQUARE]->x = 0;
+	Tile::spriteClips[SQUARE]->y = 0;
+	Tile::spriteClips[SQUARE]->w = 30;
+	Tile::spriteClips[SQUARE]->h = 30;
 	
-	Tile::spriteClips[3] = new SDL_Rect();
-	Tile::spriteClips[3]->x = 30;
-	Tile::spriteClips[3]->y = 0;
-	Tile::spriteClips[3]->w = 30;
-	Tile::spriteClips[3]->h = 30;
+	Tile::spriteClips[PENTAGON] = new SDL_Rect();
+	Tile::spriteClips[PENTAGON]->x = 30;
+	Tile::spriteClips[PENTAGON]->y = 0;
+	Tile::spriteClips[PENTAGON]->w = 30;
+	Tile::spriteClips[PENTAGON]->h = 30;
 }
-
 
 void Tile::free()
 {
@@ -113,8 +115,8 @@ void Tile::handleEvent(SDL_Event* e)
 	{
 		int x, y;
 		SDL_GetMouseState(&x, &y);
-		if(x > posX && x < posX + width &&
-		   y > posY && y < posY + height)
+		if(x > getX() && x < getX() + getWidth() &&
+		   y > getY() && y < getY() + getHeight())
 		{
 			printf("CLICKED\n");
 		}
