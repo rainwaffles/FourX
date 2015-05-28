@@ -19,13 +19,13 @@ Window::Window()
 bool Window::init()
 {
 	//Create window
-	mWindow = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, getWidth(), getHeight(), SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE );
+	mWindow = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE );
 	if( mWindow != NULL )
 	{
 		mMouseFocus = true;
 		mKeyboardFocus = true;
-		mWidth = getWidth();
-		mHeight = getHeight();
+		mWidth = SCREEN_WIDTH;
+		mHeight = SCREEN_HEIGHT;
 
 		//Create renderer for window
 		mRenderer = SDL_CreateRenderer( mWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
@@ -182,12 +182,22 @@ void Window::free()
 
 int Window::getWidth()
 {
-	return Window::SCREEN_WIDTH;
+	return mWidth;
 }
 
 int Window::getHeight()
 {
-	return Window::SCREEN_HEIGHT;
+	return mHeight;
+}
+
+void Window::setWidth(int w)
+{
+	mWidth = w;
+}
+
+void Window::setHeight(int h)
+{
+	mHeight = h;
 }
 
 bool Window::hasMouseFocus()

@@ -37,7 +37,9 @@ class Tile
 		int changeType(int newType);
 
 		//Takes in an SDL event and processes it.
-		void handleEvent(SDL_Event* e);
+		bool handleEvent(SDL_Event* e);
+
+		int getType();
 
 		static void setClips();
 

@@ -7,15 +7,19 @@
 #include <stdio.h>
 #include <string>
 #include "Texture.h"
+#include "Dialog.h"
 #include "Tile.h"
 #include "Window.h"
 
 class Map : public Window
 {
 	public:
+		typedef Window super;
+		bool init();
+		Dialog* handleEvent( SDL_Event& e );
 		void render();
-		int getWidth();
-		int getHeight();
+		bool close;
+		void free();
 
 	protected:
 		static const int TILES_X = 40;

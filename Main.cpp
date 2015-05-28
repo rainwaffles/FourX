@@ -4,11 +4,13 @@ and may not be redistributed without written permission.*/
 //Using SDL, SDL_image, standard IO, and strings
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <stdio.h>
 #include <string>
 #include "Texture.h"
 #include "Tile.h"
 #include "Map.h"
+#include "Dialog.h"
 #include "Window.h"
 
 /*
@@ -41,7 +43,8 @@ SDL_Renderer* gRenderer = NULL;
 Tile *tiles[TILES_X][TILES_Y];
 */
 
-Map *mainMap;
+Map* mainMap;
+Dialog* mainDialog = NULL;
 
 bool init()
 {
@@ -102,6 +105,7 @@ bool init()
 	}
 
 	//Tile::init(gRenderer);
+	TTF_Init();
 
 	return success;
 }
@@ -154,6 +158,12 @@ void close()
 	mainMap->free();
 	delete mainMap;
 
+	if(mainDialog != NULL)
+	{
+		mainDialog->free();
+		delete mainDialog;
+	}
+
 	//Quit SDL subsystems
 	IMG_Quit();
 	SDL_Quit();
@@ -185,7 +195,7 @@ int main( int argc, char* args[] )
 			int frame = 0;
 
 			//While application is running
-			while( !quit )
+			while( !quit && mainMap->close != true)
 			{
 				//Handle events on queue
 				while( SDL_PollEvent( &e ) != 0 )
@@ -206,7 +216,18 @@ int main( int argc, char* args[] )
 						}
 					}
 					*/
-					mainMap->handleEvent(e);
+					if(mainDialog != NULL){ mainDialog->handleEvent(e);}
+					Dialog* d = mainMap->handleEvent(e);
+					if(d != NULL)
+					{
+						if(mainDialog != NULL)
+						{
+							mainDialog->free();
+							delete mainDialog;
+						}
+						mainDialog = d;
+						mainDialog->init();
+					}
 				}
 
 				//Clear screen
@@ -225,6 +246,7 @@ int main( int argc, char* args[] )
 					}
 				}
 				*/
+				if(mainDialog != NULL){ mainDialog->render();}
 				mainMap->render();
 
 				//Update screen

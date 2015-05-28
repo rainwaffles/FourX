@@ -9,7 +9,6 @@
 #include <sstream>
 #include "Texture.h"
 
-
 class Window
 {
 		public:
@@ -34,6 +33,8 @@ class Window
 		//Window dimensions
 		int getWidth();
 		int getHeight();
+		void setWidth(int w);
+		void setHeight(int h);
 
 		//Window focii
 		bool hasMouseFocus();
@@ -48,7 +49,7 @@ class Window
 		int mWindowID;
 
 		static const int SCREEN_WIDTH = 640;
-		static const int SCREEN_HEIGHT = 480;
+		static const int SCREEN_HEIGHT = 80;
 
 		//Window dimensions
 		int mWidth;
