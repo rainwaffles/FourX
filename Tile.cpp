@@ -109,7 +109,7 @@ int Tile::changeType(int newType)
 	return temp;
 }
 
-void Tile::handleEvent(SDL_Event* e)
+bool Tile::handleEvent(SDL_Event* e)
 {
 	if(e->type == SDL_MOUSEBUTTONDOWN)
 	{
@@ -118,7 +118,13 @@ void Tile::handleEvent(SDL_Event* e)
 		if(x > getX() && x < getX() + getWidth() &&
 		   y > getY() && y < getY() + getHeight())
 		{
-			printf("CLICKED\n");
+			return true;
 		}
 	}
+	return false;
+}
+
+int Tile::getType()
+{
+	return type;
 }
