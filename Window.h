@@ -4,6 +4,7 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <stdio.h>
 #include <string>
 #include <sstream>
@@ -42,6 +43,11 @@ class Window
 		bool isMinimized();
 		bool isShown();
 
+		bool update;
+
+		static TTF_Font* gFont;
+		static SDL_Color textColor;
+
 	protected:
 		//Window data
 		SDL_Window* mWindow;
@@ -50,6 +56,7 @@ class Window
 
 		static const int SCREEN_WIDTH = 640;
 		static const int SCREEN_HEIGHT = 80;
+
 
 		//Window dimensions
 		int mWidth;

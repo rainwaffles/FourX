@@ -19,8 +19,6 @@ class Dialog : public Window
 		void render();
 	private:
 		Tile* thisTile;
-		static TTF_Font* gFont;
-		static SDL_Color textColor;
 };
 
 #endif

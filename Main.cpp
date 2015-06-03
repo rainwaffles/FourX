@@ -46,6 +46,8 @@ Tile *tiles[TILES_X][TILES_Y];
 Map* mainMap;
 Dialog* mainDialog = NULL;
 
+int playerFaction = 1;
+
 bool init()
 {
 	//This function is basically good.
@@ -191,9 +193,6 @@ int main( int argc, char* args[] )
 			//Event handler
 			SDL_Event e;
 
-			//Current animation frame
-			int frame = 0;
-
 			//While application is running
 			while( !quit && mainMap->close != true)
 			{
@@ -217,16 +216,17 @@ int main( int argc, char* args[] )
 					}
 					*/
 					if(mainDialog != NULL){ mainDialog->handleEvent(e);}
-					Dialog* d = mainMap->handleEvent(e);
+					Tile* d = mainMap->handleEvent(e);
 					if(d != NULL)
 					{
-						if(mainDialog != NULL)
+						if(mainDialog == NULL)
 						{
-							mainDialog->free();
-							delete mainDialog;
+							mainDialog = new Dialog();
+							mainDialog->init();
 						}
-						mainDialog = d;
-						mainDialog->init();
+						mainDialog->setTile(d);
+						mainDialog->focus();
+						mainDialog->update = true;
 					}
 				}
 
@@ -246,16 +246,14 @@ int main( int argc, char* args[] )
 					}
 				}
 				*/
-				if(mainDialog != NULL){ mainDialog->render();}
-				mainMap->render();
+				if(mainDialog != NULL && mainDialog->update){ mainDialog->render();}
+				if(mainMap->update){mainMap->render();}
 
 				//Update screen
 				/*
 				SDL_RenderPresent( gRenderer );
 				*/
 
-				//Go to next frame
-				++frame;
 			}
 		}
 	}

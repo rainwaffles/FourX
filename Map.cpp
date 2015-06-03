@@ -40,16 +40,22 @@ bool Map::init()
 	{
 		for(int j = 0; j < TILES_Y; j++)
 		{
-			tiles[i][j] = new Tile((i+j)%3 + 1, i*TILE_SIZE_X, j*TILE_SIZE_Y);
+			tiles[i][j] = new Tile((i+j)%3 + 1, i*TILE_SIZE_X, j*TILE_SIZE_Y + TILE_SIZE_Y);
 		}
 	}
 	close = false;
+	statusClip = new SDL_Rect();
+	statusClip->h = TILE_SIZE_Y;
+	statusClip->w = SCREEN_WIDTH;
+	statusClip->x = 0;
+	statusClip->y = 0;
 	return mWindow != NULL && mRenderer != NULL;
 }
 
 void Map::render()
 {
 	SDL_RenderClear( mRenderer );
+	renderStatus();
 	for(int i = 0; i < TILES_X; i++)
 	{
 		for(int j = 0; j < TILES_Y; j++)
@@ -58,24 +64,34 @@ void Map::render()
 		}
 	}
 	SDL_RenderPresent( mRenderer );
+	update = false;
 }
 
-Dialog* Map::handleEvent(SDL_Event &e)
+void Map::renderStatus()
+{
+	std::stringstream tmp;
+	tmp << "HELLO";
+	if(Window::gFont == NULL){Window::gFont = TTF_OpenFont( "./BOOTERFF.ttf", 100 );}
+	SDL_Surface* textSurface = TTF_RenderText_Solid( Window::gFont, tmp.str().c_str(), Window::textColor );
+	statusClip->w = (textSurface->w / textSurface->h) * TILE_SIZE_Y;
+	SDL_RenderCopy( mRenderer, SDL_CreateTextureFromSurface( mRenderer, textSurface ), NULL, statusClip );
+}
+
+Tile* Map::handleEvent(SDL_Event &e)
 {
 	super::handleEvent(e);
 	if( e.type == SDL_WINDOWEVENT && e.window.windowID == mWindowID && e.window.event == SDL_WINDOWEVENT_CLOSE)
 	{
 		close = true;
 	}
-	Dialog* d = NULL;
+	Tile* d = NULL;
 	for(int i = 0; i < TILES_X; i++)
 	{
 		for(int j = 0; j < TILES_Y; j++)
 		{
 			if(tiles[i][j]->handleEvent(&e))
 			{
-				d = new Dialog();
-				d->setTile(tiles[i][j]);
+				d = tiles[i][j];
 			}
 		}
 	}
@@ -91,4 +107,5 @@ void Map::free()
 			delete tiles[i][j];
 		}
 	}
+	delete statusClip;
 }

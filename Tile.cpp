@@ -9,15 +9,15 @@ int Tile::height = 30;
 
 Tile::Tile(int t, SDL_Renderer* rend, int x, int y) : posX(x), posY(y)
 {
+	Tile(t, x, y);
 	setRenderer(rend);
-	changeType(t);
-	Tile::instances++;
 }
 
 Tile::Tile(int t, int x, int y) : posX(x), posY(y)
 {
 	changeType(t);
 	Tile::instances++;
+	productionCapacity = std::rand()%5 + 1;
 }
 
 Tile::~Tile()
@@ -127,4 +127,9 @@ bool Tile::handleEvent(SDL_Event* e)
 int Tile::getType()
 {
 	return type;
+}
+
+int Tile::getproductionCapacity()
+{
+	return productionCapacity;
 }

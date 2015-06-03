@@ -40,6 +40,7 @@ class Tile
 		bool handleEvent(SDL_Event* e);
 
 		int getType();
+		int getproductionCapacity();
 
 		static void setClips();
 
@@ -71,6 +72,7 @@ class Tile
 			2: Square
 			3: Pentagon
 		*/
+		int productionCapacity;
 };
 
 #endif
