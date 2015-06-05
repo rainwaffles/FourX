@@ -223,7 +223,8 @@ int main( int argc, char* args[] )
 						case 0:
 							break;
 						case 1:
-							printf("N\n");
+							mainMap->transfer(mainDialog->transferT, mainDialog->transferW, mainDialog->getTile(), 1);
+							mainDialog->clearTrans();
 							break;
 						case 2:
 							printf("E\n");

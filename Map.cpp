@@ -73,6 +73,30 @@ void Map::render()
 	update = false;
 }
 
+void Map::transfer(int t, int w, Tile *tile, int dir)
+{
+	tile->troops -= t;
+	tile->workers -= w;
+	Tile *t1;
+	switch(dir)
+	{
+	case 1:
+		t1 = tiles[tile->getX()/tile->getWidth()][(tile->getY() - 2*tile->getHeight())/tile->getHeight()];
+		break;
+	case 2:
+		t1 = tiles[(tile->getX() + tile->getWidth())/tile->getWidth()][(tile->getY() - tile->getHeight())/tile->getHeight()];
+		break;
+	case 3:
+		t1 = tiles[tile->getX()/tile->getWidth()][(tile->getY())/tile->getHeight()];
+		break;
+	case 4:
+		t1 = tiles[(tile->getX() - tile->getWidth())/tile->getWidth()][(tile->getY() - tile->getHeight())/tile->getHeight()];
+		break;
+	}
+	t1->troops += t;
+	t1->workers += w;
+}
+
 void Map::renderStatus()
 {
 	std::stringstream tmp;

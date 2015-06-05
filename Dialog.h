@@ -20,10 +20,14 @@ class Dialog : public Window
 		int handleEvent( SDL_Event& e );
 		void render();
 		void free();
+		Tile* getTile();
+		int transferT;
+		int transferW;
+		void clearTrans();
 	private:
 		Tile* thisTile;
-		SDL_Rect *statusClip, *statusClip2;
-		Texture* compass; //This will be used to command units to move around I guess
+		SDL_Rect *statusClip, *statusClip2, *tt, *tw;
+		Texture *compass, *arrows; //This will be used to command units to move around I guess
 };
 
 #endif

@@ -22,6 +22,7 @@ class Map : public Window
 		bool close;
 		void free();
 		void renderStatus();
+		void transfer(int t, int w, Tile *tile, int dir);
 
 	protected:
 		static const int TILES_X = 30;
