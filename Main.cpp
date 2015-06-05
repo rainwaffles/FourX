@@ -215,7 +215,28 @@ int main( int argc, char* args[] )
 						}
 					}
 					*/
-					if(mainDialog != NULL){ mainDialog->handleEvent(e);}
+					if(mainDialog != NULL)
+					{ 
+						//char i;
+						switch(mainDialog->handleEvent(e))
+						{
+						case 0:
+							break;
+						case 1:
+							printf("N\n");
+							break;
+						case 2:
+							printf("E\n");
+							break;
+						case 3:
+							printf("S\n");
+							break;
+						case 4:
+							printf("W\n");
+							break;
+						}
+						//printf("%s\n",mainDialog->handleEvent(e));
+					}
 					Tile* d = mainMap->handleEvent(e);
 					if(d != NULL)
 					{

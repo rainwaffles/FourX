@@ -40,7 +40,6 @@ class Tile
 		bool handleEvent(SDL_Event* e);
 
 		int getType();
-		int getproductionCapacity();
 
 		static void setClips();
 
@@ -57,6 +56,20 @@ class Tile
 			PENTAGON
 		};
 
+		int troops;
+		int workers;
+
+		//These represent production levels for now
+		int metals;
+		int oil;
+		int timber;
+
+		int tMetals;
+		int tOil;
+		int tTimber;
+
+		int citySize;
+
 	private:
 		static std::string imgPath;
 		static SDL_Rect* spriteClips[ 4 ];
@@ -72,7 +85,6 @@ class Tile
 			2: Square
 			3: Pentagon
 		*/
-		int productionCapacity;
 };
 
 #endif

@@ -3,7 +3,7 @@
 bool Map::init()
 {
 	//Create window
-	mWindow = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE );
+	mWindow = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
 	if( mWindow != NULL )
 	{
 		mMouseFocus = true;
@@ -40,7 +40,13 @@ bool Map::init()
 	{
 		for(int j = 0; j < TILES_Y; j++)
 		{
-			tiles[i][j] = new Tile((i+j)%3 + 1, i*TILE_SIZE_X, j*TILE_SIZE_Y + TILE_SIZE_Y);
+			if(i + j < 3)
+			{
+				tiles[i][j] = new Tile(1, i*TILE_SIZE_X, j*TILE_SIZE_Y + TILE_SIZE_Y);
+				tiles[i][j]->troops = 2;
+				tiles[i][j]->workers = 2;
+			}
+			else {tiles[i][j] = new Tile(0, i*TILE_SIZE_X, j*TILE_SIZE_Y + TILE_SIZE_Y);}
 		}
 	}
 	close = false;
@@ -85,13 +91,16 @@ Tile* Map::handleEvent(SDL_Event &e)
 		close = true;
 	}
 	Tile* d = NULL;
-	for(int i = 0; i < TILES_X; i++)
+	if(hasMouseFocus())
 	{
-		for(int j = 0; j < TILES_Y; j++)
+		for(int i = 0; i < TILES_X; i++)
 		{
-			if(tiles[i][j]->handleEvent(&e))
+			for(int j = 0; j < TILES_Y; j++)
 			{
-				d = tiles[i][j];
+				if(tiles[i][j]->handleEvent(&e))
+				{
+					d = tiles[i][j];
+				}
 			}
 		}
 	}
@@ -100,6 +109,7 @@ Tile* Map::handleEvent(SDL_Event &e)
 
 void Map::free()
 {
+	super::free();
 	for(int i = 0; i < TILES_X; i++)
 	{
 		for(int j = 0; j < TILES_Y; j++)

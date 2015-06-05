@@ -7,17 +7,19 @@ int Tile::instances = 0;
 int Tile::width = 30;
 int Tile::height = 30;
 
-Tile::Tile(int t, SDL_Renderer* rend, int x, int y) : posX(x), posY(y)
+Tile::Tile(int t, SDL_Renderer* rend, int x, int y)
 {
 	Tile(t, x, y);
 	setRenderer(rend);
 }
 
-Tile::Tile(int t, int x, int y) : posX(x), posY(y)
+Tile::Tile(int t, int x, int y) : posX(x), posY(y), troops(0), workers(0), 
+									metals(0), oil(0), timber(0), 
+									tMetals(std::rand()%5 + 1), tOil(std::rand()%5 + 1), tTimber(std::rand()%5 + 1), citySize(0)
 {
 	changeType(t);
 	Tile::instances++;
-	productionCapacity = std::rand()%5 + 1;
+	//productionCapacity = std::rand()%5 + 1;
 }
 
 Tile::~Tile()
@@ -127,9 +129,4 @@ bool Tile::handleEvent(SDL_Event* e)
 int Tile::getType()
 {
 	return type;
-}
-
-int Tile::getproductionCapacity()
-{
-	return productionCapacity;
 }
