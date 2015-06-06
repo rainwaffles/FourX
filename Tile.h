@@ -56,6 +56,20 @@ class Tile
 			PENTAGON
 		};
 
+		int troops;
+		int workers;
+
+		//These represent production levels for now
+		int metals;
+		int oil;
+		int timber;
+
+		int tMetals;
+		int tOil;
+		int tTimber;
+
+		int citySize;
+
 	private:
 		static std::string imgPath;
 		static SDL_Rect* spriteClips[ 4 ];

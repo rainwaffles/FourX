@@ -1,5 +1,8 @@
 #include "Window.h"
 
+TTF_Font* Window::gFont;
+SDL_Color Window::textColor = {0,0,0};
+
 Window::Window()
 {
 	//Initialize non-existant window
@@ -14,12 +17,14 @@ Window::Window()
 	
 	mWidth = 0;
 	mHeight = 0;
+
+	update = true;
 }
 
 bool Window::init()
 {
 	//Create window
-	mWindow = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE );
+	mWindow = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
 	if( mWindow != NULL )
 	{
 		mMouseFocus = true;
