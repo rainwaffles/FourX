@@ -145,18 +145,26 @@ int Dialog::handleEvent(SDL_Event &e)
 	{
 		switch( e.key.keysym.sym )
 		{
-		case SDLK_UP:
+		case SDLK_KP_8:
+			update = true;
 			return 1;
-		case SDLK_RIGHT:
+		case SDLK_KP_6:
+			update = true;
 			return 2;
-		case SDLK_DOWN:
+		case SDLK_KP_2:
+			update = true;
 			return 3;
-		case SDLK_LEFT:
+		case SDLK_KP_4:
+			update = true;
 			return 4;
-		case SDLK_PLUS:
-			return 5;
-		case SDLK_MINUS:
-			return 6;
+		case SDLK_KP_PLUS:
+			if(thisTile->troops > transferT) transferT++;
+			update = true;
+			return 0;
+		case SDLK_KP_MINUS:
+			if(transferT > 0) transferT--;
+			update = true;
+			return 0;
 		}
 	}
 	return 0;

@@ -227,18 +227,36 @@ int main( int argc, char* args[] )
 							mainDialog->clearTrans();
 							break;
 						case 2:
-							printf("E\n");
+							mainMap->transfer(mainDialog->transferT, mainDialog->transferW, mainDialog->getTile(), 2);
+							mainDialog->clearTrans();
 							break;
 						case 3:
-							printf("S\n");
+							mainMap->transfer(mainDialog->transferT, mainDialog->transferW, mainDialog->getTile(), 3);
+							mainDialog->clearTrans();
 							break;
 						case 4:
-							printf("W\n");
+							mainMap->transfer(mainDialog->transferT, mainDialog->transferW, mainDialog->getTile(), 4);
+							mainDialog->clearTrans();
 							break;
 						}
 						//printf("%s\n",mainDialog->handleEvent(e));
 					}
 					Tile* d = mainMap->handleEvent(e);
+					if(e.type == SDL_KEYDOWN && mainDialog != NULL)
+					{
+						switch( e.key.keysym.sym )
+						{
+						case SDLK_w:
+							
+							break;
+						case SDLK_d:
+							break;
+						case SDLK_s:
+							break;
+						case SDLK_a:
+							break;
+						}
+					}
 					if(d != NULL)
 					{
 						if(mainDialog == NULL)
