@@ -2,7 +2,7 @@
 
 std::string Tile::imgPath = "./imgs/tiles.png";
 SDL_Rect* Tile::spriteClips[ 4 ];
-Texture Tile::tTex;
+Texture Tile::tTex, Tile::hl;
 int Tile::instances = 0;
 int Tile::width = 30;
 int Tile::height = 30;
@@ -15,7 +15,8 @@ Tile::Tile(int t, SDL_Renderer* rend, int x, int y)
 
 Tile::Tile(int t, int x, int y) : posX(x), posY(y), troops(0), workers(0), 
 									metals(0), oil(0), timber(0), 
-									tMetals(std::rand()%5 + 1), tOil(std::rand()%5 + 1), tTimber(std::rand()%5 + 1), citySize(0)
+									tMetals(std::rand()%4 + 1), tOil(std::rand()%4 + 1), tTimber(std::rand()%4 + 1),
+									citySize(0), highlight(false)
 {
 	changeType(t);
 	Tile::instances++;
@@ -30,6 +31,10 @@ Tile::~Tile()
 void Tile::render()
 {
 	Tile::tTex.render(posX, posY, spriteClips[type]);
+	if(highlight)
+	{
+		Tile::hl.render(posX, posY);
+	}
 }
 
 void Tile::setRenderer(SDL_Renderer* rend)
@@ -41,6 +46,8 @@ void Tile::init(SDL_Renderer* rend)
 {
 	tTex.setRenderer(rend);
 	tTex.loadFromFile(Tile::imgPath);
+	hl.setRenderer(rend);
+	hl.loadFromFile("./imgs/hl.png");
 	setClips();
 }
 

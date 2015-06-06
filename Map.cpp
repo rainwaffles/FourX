@@ -77,7 +77,14 @@ void Map::transfer(int t, int w, Tile *tile, int dir)
 {
 	tile->troops -= t;
 	tile->workers -= w;
-	Tile *t1;
+	Tile *t1 = get(tile, dir);
+	t1->troops += t;
+	t1->workers += w;
+}
+
+Tile* Map::get(Tile* tile, int dir)
+{
+	Tile *t1 = NULL;
 	switch(dir)
 	{
 	case 1:
@@ -93,8 +100,7 @@ void Map::transfer(int t, int w, Tile *tile, int dir)
 		t1 = tiles[(tile->getX() - tile->getWidth())/tile->getWidth()][(tile->getY() - tile->getHeight())/tile->getHeight()];
 		break;
 	}
-	t1->troops += t;
-	t1->workers += w;
+	return t1;
 }
 
 void Map::renderStatus()

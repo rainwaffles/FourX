@@ -23,6 +23,7 @@ class Map : public Window
 		void free();
 		void renderStatus();
 		void transfer(int t, int w, Tile *tile, int dir);
+		Tile* get(Tile* t, int dir);
 
 	protected:
 		static const int TILES_X = 30;
