@@ -70,10 +70,12 @@ class Tile
 
 		int citySize;
 
+		bool highlight;
+
 	private:
 		static std::string imgPath;
 		static SDL_Rect* spriteClips[ 4 ];
-		static Texture tTex;
+		static Texture tTex, hl;
 		static int instances;
 
 		int posX, posY;

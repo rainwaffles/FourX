@@ -225,18 +225,22 @@ int main( int argc, char* args[] )
 						case 1:
 							mainMap->transfer(mainDialog->transferT, mainDialog->transferW, mainDialog->getTile(), 1);
 							mainDialog->clearTrans();
+							mainMap->update = true;
 							break;
 						case 2:
 							mainMap->transfer(mainDialog->transferT, mainDialog->transferW, mainDialog->getTile(), 2);
 							mainDialog->clearTrans();
+							mainMap->update = true;
 							break;
 						case 3:
 							mainMap->transfer(mainDialog->transferT, mainDialog->transferW, mainDialog->getTile(), 3);
 							mainDialog->clearTrans();
+							mainMap->update = true;
 							break;
 						case 4:
 							mainMap->transfer(mainDialog->transferT, mainDialog->transferW, mainDialog->getTile(), 4);
 							mainDialog->clearTrans();
+							mainMap->update = true;
 							break;
 						}
 						//printf("%s\n",mainDialog->handleEvent(e));
@@ -247,13 +251,16 @@ int main( int argc, char* args[] )
 						switch( e.key.keysym.sym )
 						{
 						case SDLK_w:
-							
+							d = mainMap->get(mainDialog->getTile(), 1);
 							break;
 						case SDLK_d:
+							d = mainMap->get(mainDialog->getTile(), 2);
 							break;
 						case SDLK_s:
+							d = mainMap->get(mainDialog->getTile(), 3);
 							break;
 						case SDLK_a:
+							d = mainMap->get(mainDialog->getTile(), 4);
 							break;
 						}
 					}
@@ -264,9 +271,15 @@ int main( int argc, char* args[] )
 							mainDialog = new Dialog();
 							mainDialog->init();
 						}
+						else
+						{
+							mainDialog->getTile()->highlight = false;
+						}
 						mainDialog->setTile(d);
 						mainDialog->focus();
 						mainDialog->update = true;
+						d->highlight = true;
+						mainMap->update = true;
 					}
 				}
 
