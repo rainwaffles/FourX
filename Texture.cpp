@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Texture.h"
 
 Texture::Texture()
@@ -50,6 +51,7 @@ bool Texture::loadFromFile( std::string path )
 			//Get image dimensions
 			mWidth = loadedSurface->w;
 			mHeight = loadedSurface->h;
+			printf("%d %d \n", mWidth, mHeight);
 		}
 
 		//Get rid of old loaded surface
@@ -101,6 +103,11 @@ void Texture::render( int x, int y, SDL_Rect* clip )
 	{
 		renderQuad.w = clip->w;
 		renderQuad.h = clip->h;
+		if (clip->h == 90)
+		{
+			renderQuad.w = 30;
+			renderQuad.h = 30;
+		}
 	}
 
 	//Render to screen

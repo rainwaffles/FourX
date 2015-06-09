@@ -28,6 +28,8 @@ void Dialog::init()
 	compass->loadFromFile("./imgs/compass.png");
 	arrows = new Texture(mRenderer);
 	arrows->loadFromFile("./imgs/arrows.png");
+	background = new Texture(mRenderer);
+	background->loadFromFile("./imgs/dialogueBackground.png");
 	transferT = 0;
 	transferW = 0;
 }
@@ -47,6 +49,8 @@ void Dialog::clearTrans()
 void Dialog::render()
 {
 	SDL_RenderClear( mRenderer );
+
+	background->render(0, 0);
 
 	std::stringstream tmp;
 	tmp << "Metal: " << thisTile->metals << "/" << thisTile->tMetals 

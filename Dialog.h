@@ -27,7 +27,7 @@ class Dialog : public Window
 	private:
 		Tile* thisTile;
 		SDL_Rect *statusClip, *statusClip2, *tt, *tw;
-		Texture *compass, *arrows; //This will be used to command units to move around I guess
+		Texture *compass, *arrows, *background; //This will be used to command units to move around I guess
 };
 
 #endif

@@ -1,15 +1,19 @@
 #include "Tile.h"
 
-std::string Tile::imgPath = "./imgs/tiles.png";
-SDL_Rect* Tile::spriteClips[ 4 ];
+std::string Tile::imgPath = "./imgs/claim.png";
+SDL_Rect* Tile::spriteClips[ 6 ];
+SDL_Renderer* Tile::renderer;
 Texture Tile::tTex, Tile::hl;
 int Tile::instances = 0;
 int Tile::width = 30;
 int Tile::height = 30;
 
+//Color messing about
+
 Tile::Tile(int t, SDL_Renderer* rend, int x, int y)
 {
 	Tile(t, x, y);
+	Tile::renderer = rend;
 	setRenderer(rend);
 }
 
@@ -20,6 +24,10 @@ Tile::Tile(int t, int x, int y) : posX(x), posY(y), troops(0), workers(0),
 {
 	changeType(t);
 	Tile::instances++;
+	a = 255 * .25;
+	r = 255;
+	g = 0;
+	b = 0;
 	//productionCapacity = std::rand()%5 + 1;
 }
 
@@ -30,11 +38,33 @@ Tile::~Tile()
 
 void Tile::render()
 {
-	Tile::tTex.render(posX, posY, spriteClips[type]);
+
+	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+	
+	tTex.setColor(r, g, b);
+	tTex.setAlpha(a);
+
+	if (workers == 0 && troops == 0)
+	{
+		changeType(UNCLAIMED);
+	}
+	else
+	{
+		changeType(TRIANGLE);
+	}
+	
+	if (getType() == TRIANGLE)
+	{
+		Tile::tTex.render(posX, posY);
+	}
+
+	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+
 	if(highlight)
 	{
 		Tile::hl.render(posX, posY);
 	}
+
 }
 
 void Tile::setRenderer(SDL_Renderer* rend)
@@ -76,6 +106,18 @@ void Tile::setClips()
 	Tile::spriteClips[PENTAGON]->y = 0;
 	Tile::spriteClips[PENTAGON]->w = 30;
 	Tile::spriteClips[PENTAGON]->h = 30;
+
+	Tile::spriteClips[WORKER] = new SDL_Rect();
+	Tile::spriteClips[WORKER]->x = 560;
+	Tile::spriteClips[WORKER]->y = 0;
+	Tile::spriteClips[WORKER]->w = 80;
+	Tile::spriteClips[WORKER]->h = 90;
+
+	Tile::spriteClips[SOLDIER] = new SDL_Rect();
+	Tile::spriteClips[SOLDIER]->x = 560;
+	Tile::spriteClips[SOLDIER]->y = 0;
+	Tile::spriteClips[SOLDIER]->w = 80;
+	Tile::spriteClips[SOLDIER]->h = 90;
 }
 
 void Tile::free()

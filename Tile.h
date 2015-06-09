@@ -53,7 +53,9 @@ class Tile
 			UNCLAIMED,
 			TRIANGLE,
 			SQUARE,
-			PENTAGON
+			PENTAGON,
+			WORKER,
+			SOLDIER
 		};
 
 		int troops;
@@ -74,9 +76,10 @@ class Tile
 
 	private:
 		static std::string imgPath;
-		static SDL_Rect* spriteClips[ 4 ];
+		static SDL_Rect* spriteClips[ 6 ];
 		static Texture tTex, hl;
 		static int instances;
+		static SDL_Renderer* renderer;
 
 		int posX, posY;
 		static int width, height;
@@ -87,6 +90,7 @@ class Tile
 			2: Square
 			3: Pentagon
 		*/
+		Uint8 r, g, b, a;
 };
 
 #endif

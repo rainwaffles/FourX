@@ -34,6 +34,12 @@ class Map : public Window
 		static const int SCREEN_HEIGHT = TILES_Y*TILE_SIZE_Y + TILE_SIZE_Y;
 		Tile *tiles[TILES_X][TILES_Y];
 		SDL_Rect* statusClip;
+
+	private:
+		static std::string imgPath;
+		static Texture background;
+		static SDL_Rect* backrect;
+
 };
 
 #endif

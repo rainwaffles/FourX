@@ -1,5 +1,9 @@
 #include "Map.h"
 
+std::string Map::imgPath = "./imgs/background.png";
+Texture Map::background;
+SDL_Rect* Map::backrect;
+
 bool Map::init()
 {
 	//Create window
@@ -15,7 +19,6 @@ bool Map::init()
 		mRenderer = SDL_CreateRenderer( mWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
 		if( mRenderer == NULL )
 		{
-			printf( "Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
 			SDL_DestroyWindow( mWindow );
 			mWindow = NULL;
 		}
@@ -36,13 +39,16 @@ bool Map::init()
 		printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
 	}
 	Tile::init(mRenderer);
+	background.setRenderer(mRenderer);
+	background.loadFromFile(imgPath);
+	
 	for(int i = 0; i < TILES_X; i++)
 	{
 		for(int j = 0; j < TILES_Y; j++)
 		{
 			if(i + j < 3)
 			{
-				tiles[i][j] = new Tile(1, i*TILE_SIZE_X, j*TILE_SIZE_Y + TILE_SIZE_Y);
+				tiles[i][j] = new Tile(4, i*TILE_SIZE_X, j*TILE_SIZE_Y + TILE_SIZE_Y);
 				tiles[i][j]->troops = 2;
 				tiles[i][j]->workers = 2;
 			}
@@ -50,6 +56,13 @@ bool Map::init()
 		}
 	}
 	close = false;
+
+	Map::backrect = new SDL_Rect();
+	Map::backrect->h = 1200;
+	Map::backrect->w = 1200; 
+	Map::backrect->x = 0;
+	Map::backrect->y = 0;
+
 	statusClip = new SDL_Rect();
 	statusClip->h = TILE_SIZE_Y;
 	statusClip->w = SCREEN_WIDTH;
@@ -61,6 +74,9 @@ bool Map::init()
 void Map::render()
 {
 	SDL_RenderClear( mRenderer );
+	
+	Map::background.render(0, 0, backrect);
+	
 	renderStatus();
 	for(int i = 0; i < TILES_X; i++)
 	{
@@ -107,7 +123,7 @@ void Map::renderStatus()
 {
 	std::stringstream tmp;
 	tmp << "HELLO";
-	if(Window::gFont == NULL){Window::gFont = TTF_OpenFont( "./BOOTERFF.ttf", 100 );}
+	if(Window::gFont == NULL){Window::gFont = TTF_OpenFont( "fonts/BOOTERFF.ttf", 100 );}
 	SDL_Surface* textSurface = TTF_RenderText_Solid( Window::gFont, tmp.str().c_str(), Window::textColor );
 	statusClip->w = (textSurface->w / textSurface->h) * TILE_SIZE_Y;
 	SDL_RenderCopy( mRenderer, SDL_CreateTextureFromSurface( mRenderer, textSurface ), NULL, statusClip );
@@ -115,6 +131,9 @@ void Map::renderStatus()
 
 Tile* Map::handleEvent(SDL_Event &e)
 {
+
+	bool exists = false;
+
 	super::handleEvent(e);
 	if( e.type == SDL_WINDOWEVENT && e.window.windowID == mWindowID && e.window.event == SDL_WINDOWEVENT_CLOSE)
 	{
@@ -130,10 +149,17 @@ Tile* Map::handleEvent(SDL_Event &e)
 				if(tiles[i][j]->handleEvent(&e))
 				{
 					d = tiles[i][j];
+					exists = true;
 				}
 			}
 		}
 	}
+
+	//if (!exists)
+	//{
+	//	d = tiles[0][0];
+	//}
+
 	return d;
 }
 
