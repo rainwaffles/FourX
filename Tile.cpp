@@ -1,12 +1,13 @@
 #include "Tile.h"
 
 std::string Tile::imgPath = "./imgs/claim.png";
-SDL_Rect* Tile::spriteClips[ 6 ];
+SDL_Rect* Tile::spriteClips[ 4 ];
 SDL_Renderer* Tile::renderer;
 Texture Tile::tTex, Tile::hl;
 int Tile::instances = 0;
 int Tile::width = 30;
 int Tile::height = 30;
+Unit* unit;
 
 //Color messing about
 
@@ -25,9 +26,17 @@ Tile::Tile(int t, int x, int y) : posX(x), posY(y), troops(0), workers(0),
 	changeType(t);
 	Tile::instances++;
 	a = 255 * .25;
-	r = 255;
-	g = 0;
-	b = 0;
+	r[0] = 255;
+	g[0] = 0;
+	b[0] = 0;
+
+	r[1] = 0;
+	g[1] = 255;
+	b[1] = 0;
+
+	r[2] = 0;
+	g[2] = 0;
+	b[2] = 255;
 	//productionCapacity = std::rand()%5 + 1;
 }
 
@@ -41,24 +50,32 @@ void Tile::render()
 
 	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 	
-	tTex.setColor(r, g, b);
-	tTex.setAlpha(a);
-
-	if (workers == 0 && troops == 0)
-	{
-		changeType(UNCLAIMED);
-	}
-	else
-	{
-		changeType(TRIANGLE);
-	}
-	
 	if (getType() == TRIANGLE)
 	{
+		tTex.setColor(r[0], g[0], b[0]);
+		tTex.setAlpha(a);
+		Tile::tTex.render(posX, posY);
+	}
+
+	if (getType() == SQUARE)
+	{
+		tTex.setColor(r[1], g[1], b[1]);
+		tTex.setAlpha(a);
+		Tile::tTex.render(posX, posY);
+	}
+
+	if (getType() == PENTAGON)
+	{
+		tTex.setColor(r[2], g[2], b[2]);
+		tTex.setAlpha(a);
 		Tile::tTex.render(posX, posY);
 	}
 
 	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+
+	printf("SALT CONTENT\n");
+	unit->changeType(0);
+	unit->render();
 
 	if(highlight)
 	{
@@ -79,6 +96,10 @@ void Tile::init(SDL_Renderer* rend)
 	hl.setRenderer(rend);
 	hl.loadFromFile("./imgs/hl.png");
 	setClips();
+	
+	unit = new Unit(Unit::WORKER, rend, 0, 0);
+	unit ->init(rend);
+
 }
 
 void Tile::setClips()
@@ -106,18 +127,6 @@ void Tile::setClips()
 	Tile::spriteClips[PENTAGON]->y = 0;
 	Tile::spriteClips[PENTAGON]->w = 30;
 	Tile::spriteClips[PENTAGON]->h = 30;
-
-	Tile::spriteClips[WORKER] = new SDL_Rect();
-	Tile::spriteClips[WORKER]->x = 560;
-	Tile::spriteClips[WORKER]->y = 0;
-	Tile::spriteClips[WORKER]->w = 80;
-	Tile::spriteClips[WORKER]->h = 90;
-
-	Tile::spriteClips[SOLDIER] = new SDL_Rect();
-	Tile::spriteClips[SOLDIER]->x = 560;
-	Tile::spriteClips[SOLDIER]->y = 0;
-	Tile::spriteClips[SOLDIER]->w = 80;
-	Tile::spriteClips[SOLDIER]->h = 90;
 }
 
 void Tile::free()

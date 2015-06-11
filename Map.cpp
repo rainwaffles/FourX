@@ -48,7 +48,7 @@ bool Map::init()
 		{
 			if(i + j < 3)
 			{
-				tiles[i][j] = new Tile(4, i*TILE_SIZE_X, j*TILE_SIZE_Y + TILE_SIZE_Y);
+				tiles[i][j] = new Tile(Tile::TRIANGLE, i*TILE_SIZE_X, j*TILE_SIZE_Y + TILE_SIZE_Y);
 				tiles[i][j]->troops = 2;
 				tiles[i][j]->workers = 2;
 			}

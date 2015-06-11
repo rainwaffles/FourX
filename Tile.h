@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <string>
 #include "Texture.h"
+#include "Unit.h"
 
 class Tile
 {
@@ -53,9 +54,7 @@ class Tile
 			UNCLAIMED,
 			TRIANGLE,
 			SQUARE,
-			PENTAGON,
-			WORKER,
-			SOLDIER
+			PENTAGON
 		};
 
 		int troops;
@@ -74,9 +73,10 @@ class Tile
 
 		bool highlight;
 
+
 	private:
 		static std::string imgPath;
-		static SDL_Rect* spriteClips[ 6 ];
+		static SDL_Rect* spriteClips[ 4 ];
 		static Texture tTex, hl;
 		static int instances;
 		static SDL_Renderer* renderer;
@@ -84,13 +84,15 @@ class Tile
 		int posX, posY;
 		static int width, height;
 		int type;
+
+		
 		/*
 			0: Unclaimed
 			1: Triangle
 			2: Square
 			3: Pentagon
 		*/
-		Uint8 r, g, b, a;
+		Uint8 r[ 3 ], g[ 3 ], b[ 3 ], a;
 };
 
 #endif
