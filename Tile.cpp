@@ -1,9 +1,10 @@
 #include "Tile.h"
 
+bool Tile::grid = false;
 std::string Tile::imgPath = "./imgs/claim.png", Tile::unitImgPath = "./imgs/unit_tileset.png";
 SDL_Rect* Tile::spriteClips[ 4 ];
 SDL_Renderer* Tile::renderer;
-Texture Tile::tTex, Tile::hl, Tile::unit;
+Texture Tile::tTex, Tile::hl, Tile::unit, Tile::grd;
 int Tile::instances = 0;
 int Tile::width = 30;
 int Tile::height = 30;
@@ -87,7 +88,14 @@ void Tile::render()
 	{
 		Tile::hl.render(posX, posY);
 	}
+<<<<<<< HEAD
 
+=======
+	if(grid)
+	{
+		Tile::grd.render(posX, posY);
+	}
+>>>>>>> evan
 }
 
 void Tile::setRenderer(SDL_Renderer* rend)
@@ -101,8 +109,13 @@ void Tile::init(SDL_Renderer* rend)
 	tTex.loadFromFile(Tile::imgPath);
 	hl.setRenderer(rend);
 	hl.loadFromFile("./imgs/hl.png");
+<<<<<<< HEAD
 	unit.setRenderer(rend);
 	unit.loadFromFile(Tile::unitImgPath);
+=======
+	grd.setRenderer(rend);
+	grd.loadFromFile("./imgs/grid.png");
+>>>>>>> evan
 	setClips();
 	
 

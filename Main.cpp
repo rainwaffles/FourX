@@ -276,10 +276,23 @@ int main( int argc, char* args[] )
 							mainDialog->getTile()->highlight = false;
 						}
 						mainDialog->setTile(d);
-						mainDialog->focus();
+						if(mainDialog->isShown()){mainDialog->focus();}
 						mainDialog->update = true;
 						d->highlight = true;
 						mainMap->update = true;
+					}
+					if(e.type == SDL_KEYDOWN)
+					{
+						switch( e.key.keysym.sym )
+						{
+						case SDLK_g:
+							Tile::grid = !Tile::grid;
+							mainMap->update = true;
+							break;
+						case SDLK_o:
+							if(!mainDialog->isShown()){mainDialog->focus();}
+							break;
+						}
 					}
 				}
 

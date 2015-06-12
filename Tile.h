@@ -81,11 +81,13 @@ class Tile
 		bool unitHere;
 		bool highlight;
 
+		static bool grid;
+		int type;
 
 	private:
 		static std::string imgPath, unitImgPath;
 		static SDL_Rect* spriteClips[ 4 ], unitClips[ 2 ];
-		static Texture tTex, hl, unit;
+		static Texture tTex, hl, unit, grd;
 		static int instances;
 		static SDL_Renderer* renderer;
 
@@ -94,13 +96,6 @@ class Tile
 		static int width, height;
 		int type;
 
-		
-		/*
-			0: Unclaimed
-			1: Triangle
-			2: Square
-			3: Pentagon
-		*/
 		Uint8 r[ 3 ], g[ 3 ], b[ 3 ], a;
 };
 
