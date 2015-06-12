@@ -48,14 +48,17 @@ bool Map::init()
 		{
 			if(i + j < 5)
 			{
-				tiles[i][j] = new Tile(Tile::TRIANGLE, i*TILE_SIZE_X, j*TILE_SIZE_Y + TILE_SIZE_Y);
-				tiles[i][j]->troops = 2;
-				tiles[i][j]->workers = 2;
+				tiles[i][j] = new Tile(i*TILE_SIZE_X, j*TILE_SIZE_Y + TILE_SIZE_Y);
+//				tiles[i][j]->troops = 2;
+//				tiles[i][j]->workers = 2;
 			}
-			else {tiles[i][j] = new Tile(2, i*TILE_SIZE_X, j*TILE_SIZE_Y + TILE_SIZE_Y);}
+			else {tiles[i][j] = new Tile(i*TILE_SIZE_X, j*TILE_SIZE_Y + TILE_SIZE_Y);}
 		}
 	}
 	close = false;
+
+	tiles[5][5]->unit = new Unit(Unit::SOLDIER, 5*TILE_SIZE_X, 5*TILE_SIZE_Y + TILE_SIZE_Y);
+	tiles[5][5]->unit->init(mRenderer);
 
 	Map::backrect = new SDL_Rect();
 	Map::backrect->h = 1200;
@@ -89,6 +92,7 @@ void Map::render()
 	update = false;
 }
 
+/*
 void Map::transfer(int t, int w, Tile *tile, int dir)
 {
 	Tile *t1 = get(tile, dir);
@@ -109,10 +113,15 @@ void Map::transfer(int t, int w, Tile *tile, int dir)
 		t1->type = tile->type;
 	}
 }
+*/
 
 Tile* Map::get(Tile* tile, int dir)
 {
 	Tile *t1 = NULL;
+	if(tile->getX() <= 0 && dir == 4){return t1;}
+	if(tile->getX() >= SCREEN_WIDTH - TILE_SIZE_X && dir == 2){return t1;}
+	if(tile->getY() <= TILE_SIZE_Y && dir == 1){return t1;}
+	if(tile->getY() >= SCREEN_HEIGHT - TILE_SIZE_Y && dir == 3){return t1;}
 	switch(dir)
 	{
 	case 1:
@@ -135,7 +144,7 @@ void Map::renderStatus()
 {
 	std::stringstream tmp;
 	tmp << "HELLO";
-	if(Window::gFont == NULL){Window::gFont = TTF_OpenFont( "fonts/BOOTERFF.ttf", 100 );}
+	if(Window::gFont == NULL){Window::gFont = TTF_OpenFont( "./BOOTERFF.ttf", 100 );}
 	SDL_Surface* textSurface = TTF_RenderText_Solid( Window::gFont, tmp.str().c_str(), Window::textColor );
 	statusClip->w = (textSurface->w / textSurface->h) * TILE_SIZE_Y;
 	SDL_RenderCopy( mRenderer, SDL_CreateTextureFromSurface( mRenderer, textSurface ), NULL, statusClip );

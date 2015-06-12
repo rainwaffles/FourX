@@ -1,10 +1,10 @@
 #include "Tile.h"
 
 bool Tile::grid = false;
-std::string Tile::imgPath = "./imgs/claim.png", Tile::unitImgPath = "./imgs/unit_tileset.png";
+std::string Tile::imgPath = "./imgs/claim.png";
 SDL_Rect* Tile::spriteClips[ 4 ];
 SDL_Renderer* Tile::renderer;
-Texture Tile::tTex, Tile::hl, Tile::unit, Tile::grd;
+Texture Tile::tTex, Tile::hl, Tile::grd;
 int Tile::instances = 0;
 int Tile::width = 30;
 int Tile::height = 30;
@@ -12,20 +12,19 @@ int Tile::height = 30;
 
 //Color messing about
 
-Tile::Tile(int t, SDL_Renderer* rend, int x, int y)
+Tile::Tile(SDL_Renderer* rend, int x, int y)
 {
-	Tile(t, x, y);
+	Tile(x, y);
 	Tile::renderer = rend;
 	setRenderer(rend);
 }
 
-Tile::Tile(int t, int x, int y) : posX(x), posY(y), troops(0), workers(0), 
-									metals(0), oil(0), timber(0), 
-									tMetals(std::rand()%4 + 1), tOil(std::rand()%4 + 1), tTimber(std::rand()%4 + 1),
-									citySize(0), highlight(false), unitHere(false)
+Tile::Tile(int x, int y) : posX(x), posY(y), highlight(false)
 {
-	changeType(t);
+	//changeType(t);
 	Tile::instances++;
+	unit = NULL;
+	/*
 	a = 255 * .25;
 	r[0] = 255;
 	g[0] = 0;
@@ -38,7 +37,7 @@ Tile::Tile(int t, int x, int y) : posX(x), posY(y), troops(0), workers(0),
 	r[2] = 0;
 	g[2] = 0;
 	b[2] = 255;
-	
+	*/
 	//productionCapacity = std::rand()%5 + 1;
 }
 
@@ -51,7 +50,7 @@ void Tile::render()
 {
 
 	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-	
+	/*
 	if (getType() == TRIANGLE)
 	{
 		tTex.setColor(r[0], g[0], b[0]);
@@ -72,30 +71,29 @@ void Tile::render()
 		tTex.setAlpha(a);
 		Tile::tTex.render(posX, posY);
 	}
+	*/
+	//SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
-	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-
-	if (unitHere)
+	if(unit != NULL)
 	{
-		printf("IDK\n");
-		/*unit->changeType(Unit::WORKER); 
+		unit->render();
+		//printf("IDK\n");
+		/*
+		unit->changeType(Unit::WORKER); 
 		unit->setX(posX);
 		unit->setX(posY);
-		unit->render();*/
+		unit->render();
+		*/
 	}
 
 	if(highlight)
 	{
 		Tile::hl.render(posX, posY);
 	}
-<<<<<<< HEAD
-
-=======
 	if(grid)
 	{
 		Tile::grd.render(posX, posY);
 	}
->>>>>>> evan
 }
 
 void Tile::setRenderer(SDL_Renderer* rend)
@@ -109,18 +107,14 @@ void Tile::init(SDL_Renderer* rend)
 	tTex.loadFromFile(Tile::imgPath);
 	hl.setRenderer(rend);
 	hl.loadFromFile("./imgs/hl.png");
-<<<<<<< HEAD
-	unit.setRenderer(rend);
-	unit.loadFromFile(Tile::unitImgPath);
-=======
 	grd.setRenderer(rend);
 	grd.loadFromFile("./imgs/grid.png");
->>>>>>> evan
-	setClips();
+//	setClips();
 	
 
 }
 
+/*
 void Tile::setClips()
 {
 	Tile::spriteClips[UNCLAIMED] = new SDL_Rect();
@@ -147,6 +141,7 @@ void Tile::setClips()
 	Tile::spriteClips[PENTAGON]->w = 30;
 	Tile::spriteClips[PENTAGON]->h = 30;
 }
+*/
 
 void Tile::free()
 {
@@ -180,14 +175,14 @@ int Tile::getY()
 {
 	return posY;
 }
-
+/*
 int Tile::changeType(int newType)
 {
 	int temp = type;
 	type = newType;
 	return temp;
 }
-
+*/
 bool Tile::handleEvent(SDL_Event* e)
 {
 	if(e->type == SDL_MOUSEBUTTONDOWN)
@@ -202,8 +197,9 @@ bool Tile::handleEvent(SDL_Event* e)
 	}
 	return false;
 }
-
+/*
 int Tile::getType()
 {
 	return type;
 }
+*/

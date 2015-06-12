@@ -220,6 +220,22 @@ int main( int argc, char* args[] )
 						//char i;
 						switch(mainDialog->handleEvent(e))
 						{
+						case 1:
+							break;
+						case 2:
+							break;
+						case 3:
+							break;
+						case 4:
+							break;
+						}
+					}
+					/*
+					if(mainDialog != NULL)
+					{ 
+						//char i;
+						switch(mainDialog->handleEvent(e))
+						{
 						case 0:
 							break;
 						case 1:
@@ -245,6 +261,7 @@ int main( int argc, char* args[] )
 						}
 						//printf("%s\n",mainDialog->handleEvent(e));
 					}
+					*/
 					Tile* d = mainMap->handleEvent(e);
 					if(e.type == SDL_KEYDOWN && mainDialog != NULL)
 					{
@@ -289,8 +306,9 @@ int main( int argc, char* args[] )
 							Tile::grid = !Tile::grid;
 							mainMap->update = true;
 							break;
-						case SDLK_o:
+						case SDLK_e:
 							if(!mainDialog->isShown()){mainDialog->focus();}
+							else{mainDialog->hide();}
 							break;
 						}
 					}

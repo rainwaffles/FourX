@@ -1,9 +1,9 @@
 #include "Unit.h"
 #include <iostream>
 
-std::string Unit::imgPath = "./imgs/unit_tileset.png";
+std::string Unit::imgPath = "./imgs/units.png";
 SDL_Rect* Unit::spriteClips[2];
-SDL_Renderer* Unit::renderer;
+//SDL_Renderer* Unit::renderer;
 Texture Unit::tTex;
 int Unit::instances = 0;
 int Unit::width = 30;
@@ -17,7 +17,8 @@ Unit::Unit()
 Unit::Unit(int t, SDL_Renderer* rend, int x, int y)
 {
 	Unit(t, x, y);
-	Unit::renderer = rend;
+//	Unit::renderer = rend;
+
 	setRenderer(rend);
 }
 
@@ -34,9 +35,7 @@ Unit::~Unit()
 
 void Unit::render()
 {
-	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-
-
+//	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
 	if (getType() == SOLDIER)
 	{
@@ -69,16 +68,16 @@ void Unit::init(SDL_Renderer* rend)
 void Unit::setClips()
 {
 	Unit::spriteClips[SOLDIER] = new SDL_Rect();
-	Unit::spriteClips[SOLDIER]->x = 116;
-	Unit::spriteClips[SOLDIER]->y = 98;
-	Unit::spriteClips[SOLDIER]->w = 85;
-	Unit::spriteClips[SOLDIER]->h = 85;
+	Unit::spriteClips[SOLDIER]->x = 0;
+	Unit::spriteClips[SOLDIER]->y = 0;
+	Unit::spriteClips[SOLDIER]->w = 30;
+	Unit::spriteClips[SOLDIER]->h = 30;
 
 	Unit::spriteClips[WORKER] = new SDL_Rect();
-	Unit::spriteClips[WORKER]->x = 560;
+	Unit::spriteClips[WORKER]->x = 30;
 	Unit::spriteClips[WORKER]->y = 0;
-	Unit::spriteClips[WORKER]->w = 80;
-	Unit::spriteClips[WORKER]->h = 90;
+	Unit::spriteClips[WORKER]->w = 60;
+	Unit::spriteClips[WORKER]->h = 60;
 
 }
 

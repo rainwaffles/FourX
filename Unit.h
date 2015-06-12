@@ -53,7 +53,7 @@ private:
 	static SDL_Rect* spriteClips[ 2 ];
 	static Texture tTex;
 	static int instances;
-	static SDL_Renderer* renderer;
+//	static SDL_Renderer* renderer;
 
 	int posX, posY;
 	static int width, height;

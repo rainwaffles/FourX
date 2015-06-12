@@ -14,6 +14,7 @@ void Dialog::init()
 	statusClip2->w = SCREEN_WIDTH;
 	statusClip2->x = 0;
 	statusClip2->y = SCREEN_HEIGHT/2;
+/*
 	tt = new SDL_Rect();
 	tt->h = SCREEN_HEIGHT/2;
 	tt->w = 30;
@@ -24,27 +25,30 @@ void Dialog::init()
 	tw->w = 30;
 	tw->x = SCREEN_WIDTH - 120;
 	tw->y = SCREEN_HEIGHT/2;
+*/
 	compass = new Texture(mRenderer);
 	compass->loadFromFile("./imgs/compass.png");
-	arrows = new Texture(mRenderer);
-	arrows->loadFromFile("./imgs/arrows.png");
+//	arrows = new Texture(mRenderer);
+//	arrows->loadFromFile("./imgs/arrows.png");
 	background = new Texture(mRenderer);
 	background->loadFromFile("./imgs/dialogueBackground.png");
-	transferT = 0;
-	transferW = 0;
+//	transferT = 0;
+//	transferW = 0;
 }
 
 void Dialog::setTile(Tile* t)
 {
-	clearTrans();
+//	clearTrans();
 	thisTile = t;
 }
 
+/*
 void Dialog::clearTrans()
 {
 	transferT = 0;
 	transferW = 0;
 }
+*/
 
 void Dialog::render()
 {
@@ -53,19 +57,18 @@ void Dialog::render()
 	background->render(0, 0);
 
 	std::stringstream tmp;
-	tmp << "Metal: " << thisTile->metals << "/" << thisTile->tMetals 
-		<< " Oil: " << thisTile->oil << "/" << thisTile->tOil 
-		<< " Timber: " << thisTile->timber << "/" << thisTile->tTimber;
+	tmp << "hi, this is where the unit info will be stored";
 	SDL_Surface* textSurface = TTF_RenderText_Solid( Window::gFont, tmp.str().c_str(), Window::textColor );
 	statusClip->w = (textSurface->w / textSurface->h) * (SCREEN_HEIGHT/2);
 	SDL_RenderCopy( mRenderer, SDL_CreateTextureFromSurface( mRenderer, textSurface ), NULL, statusClip );
 
 	tmp.str("");
-	tmp << "Troops: " << thisTile->troops << " Workers: " << thisTile->workers;
+	tmp << "terrain info I guess";
 	textSurface = TTF_RenderText_Solid( Window::gFont, tmp.str().c_str(), Window::textColor );
 	statusClip2->w = (textSurface->w / textSurface->h) * (SCREEN_HEIGHT/2);
 	SDL_RenderCopy( mRenderer, SDL_CreateTextureFromSurface( mRenderer, textSurface ), NULL, statusClip2 );
 
+	/*
 	tmp.str("");
 	tmp << transferT;
 	textSurface = TTF_RenderText_Solid( Window::gFont, tmp.str().c_str(), Window::textColor );
@@ -76,11 +79,13 @@ void Dialog::render()
 	textSurface = TTF_RenderText_Solid( Window::gFont, tmp.str().c_str(), Window::textColor );
 //	tw->w = (textSurface->w / textSurface->h) * (SCREEN_HEIGHT/2);
 	SDL_RenderCopy( mRenderer, SDL_CreateTextureFromSurface( mRenderer, textSurface ), NULL, tw );
+	*/
 
 	compass->render(SCREEN_WIDTH - 80, 0);
+	/*
 	arrows->render(SCREEN_WIDTH - 160, 40);
 	arrows->render(SCREEN_WIDTH - 240, 40);
-
+	*/
 	SDL_RenderPresent( mRenderer );
 	update = false;
 }
@@ -116,6 +121,7 @@ int Dialog::handleEvent(SDL_Event &e)
 			update = true;
 			return 4; //West
 		}
+		/*
 		else if(x > SCREEN_WIDTH - 160 && x < SCREEN_WIDTH - 120 &&
 		   y > SCREEN_HEIGHT - 40 && y < SCREEN_HEIGHT - 20)
 		{
@@ -144,23 +150,25 @@ int Dialog::handleEvent(SDL_Event &e)
 			update = true;
 			return 0; //Down
 		}
+		*/
 	}
 	if(e.type == SDL_KEYDOWN && hasKeyboardFocus())
 	{
 		switch( e.key.keysym.sym )
 		{
-		case SDLK_KP_8:
+		case SDLK_UP:
 			update = true;
 			return 1;
-		case SDLK_KP_6:
+		case SDLK_RIGHT:
 			update = true;
 			return 2;
-		case SDLK_KP_2:
+		case SDLK_DOWN:
 			update = true;
 			return 3;
-		case SDLK_KP_4:
+		case SDLK_LEFT:
 			update = true;
 			return 4;
+		/*
 		case SDLK_KP_PLUS:
 			if(thisTile->troops > transferT) transferT++;
 			update = true;
@@ -169,6 +177,7 @@ int Dialog::handleEvent(SDL_Event &e)
 			if(transferT > 0) transferT--;
 			update = true;
 			return 0;
+		*/
 		case SDLK_ESCAPE:
 			SDL_HideWindow( mWindow );
 			return 0;
@@ -188,6 +197,4 @@ void Dialog::free()
 	delete statusClip;
 	compass->free();
 	delete compass;
-	arrows->free();
-	delete arrows;
 }

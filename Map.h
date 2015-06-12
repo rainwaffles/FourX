@@ -22,7 +22,7 @@ class Map : public Window
 		bool close;
 		void free();
 		void renderStatus();
-		void transfer(int t, int w, Tile *tile, int dir);
+//		void transfer(int t, int w, Tile *tile, int dir);
 		Tile* get(Tile* t, int dir);
 
 	protected:

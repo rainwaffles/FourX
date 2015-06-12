@@ -7,14 +7,14 @@
 #include <stdio.h>
 #include <string>
 #include "Texture.h"
-//#include "Unit.h"
+#include "Unit.h"
 
 class Tile
 {
 	public:
 		//Constructor 
-		Tile(int t, SDL_Renderer* rend, int x, int y);
-		Tile(int t, int x, int y);
+		Tile(SDL_Renderer* rend, int x, int y);
+		Tile(int x, int y);
 		//Deconstuctor (just calls free())
 		~Tile();
 
@@ -35,21 +35,21 @@ class Tile
 		int getY();
 
 		//Changes type, to be used when a tile is conquered
-		int changeType(int newType);
+//		int changeType(int newType);
 
 		//Takes in an SDL event and processes it.
 		bool handleEvent(SDL_Event* e);
 
-		int getType();
+//		int getType();
 
 		
-		static void setClips();
+//		static void setClips();
 
 		/*
 			This is where we add other stuff that determine the composition of a tile, 
 			such as terrain, units, income, resources, ect. 
 		*/
-
+/*
 		enum TileType
 		{
 			UNCLAIMED,
@@ -57,16 +57,17 @@ class Tile
 			SQUARE,
 			PENTAGON
 		};
-
+*/
+/*
 		enum UnitType
 		{
 			TROOPER,
 			WORKERS
 		};
-
-		int troops;
-		int workers;
-
+*/
+//		int troops;
+//		int workers;
+/*
 		//These represent production levels for now
 		int metals;
 		int oil;
@@ -77,26 +78,25 @@ class Tile
 		int tTimber;
 
 		int citySize;
-
-		bool unitHere;
+*/
+		Unit *unit;
 		bool highlight;
 
 		static bool grid;
-		int type;
+//		int type;
 
 	private:
-		static std::string imgPath, unitImgPath;
+		static std::string imgPath;
 		static SDL_Rect* spriteClips[ 4 ], unitClips[ 2 ];
-		static Texture tTex, hl, unit, grd;
+		static Texture tTex, hl, grd;
 		static int instances;
 		static SDL_Renderer* renderer;
 
 
 		int posX, posY;
 		static int width, height;
-		int type;
 
-		Uint8 r[ 3 ], g[ 3 ], b[ 3 ], a;
+//		Uint8 r[ 3 ], g[ 3 ], b[ 3 ], a;
 };
 
 #endif

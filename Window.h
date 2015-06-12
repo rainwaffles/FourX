@@ -24,6 +24,7 @@ class Window
 
 		//Focuses on window
 		void focus();
+		void hide();
 
 		//Shows windows contents
 		void render();

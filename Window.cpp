@@ -224,3 +224,8 @@ bool Window::isShown()
 {
 	return mShown;
 }
+
+void Window::hide()
+{
+	SDL_HideWindow( mWindow );
+}
