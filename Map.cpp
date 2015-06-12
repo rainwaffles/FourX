@@ -40,13 +40,13 @@ bool Map::init()
 	{
 		for(int j = 0; j < TILES_Y; j++)
 		{
-			if(i + j < 3)
+			if(i + j < 5)
 			{
 				tiles[i][j] = new Tile(1, i*TILE_SIZE_X, j*TILE_SIZE_Y + TILE_SIZE_Y);
-				tiles[i][j]->troops = 2;
-				tiles[i][j]->workers = 2;
+				tiles[i][j]->troops = i+j;
+				tiles[i][j]->workers = 4-i-j;
 			}
-			else {tiles[i][j] = new Tile(0, i*TILE_SIZE_X, j*TILE_SIZE_Y + TILE_SIZE_Y);}
+			else {tiles[i][j] = new Tile(2, i*TILE_SIZE_X, j*TILE_SIZE_Y + TILE_SIZE_Y);}
 		}
 	}
 	close = false;
@@ -75,11 +75,23 @@ void Map::render()
 
 void Map::transfer(int t, int w, Tile *tile, int dir)
 {
-	tile->troops -= t;
-	tile->workers -= w;
 	Tile *t1 = get(tile, dir);
-	t1->troops += t;
-	t1->workers += w;
+	if(t1 == NULL) {return;}
+	if(t1->type == tile->type)
+	{
+		tile->troops -= t;
+		tile->workers -= w;
+		t1->troops += t;
+		t1->workers += w;
+	}
+	else if(t1->troops < tile->troops)
+	{
+		t1->troops = tile->troops - t1->troops;
+		t1->workers += w;
+		tile->troops -= t;
+		tile->workers -= w;
+		t1->type = tile->type;
+	}
 }
 
 Tile* Map::get(Tile* tile, int dir)

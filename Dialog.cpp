@@ -165,6 +165,9 @@ int Dialog::handleEvent(SDL_Event &e)
 			if(transferT > 0) transferT--;
 			update = true;
 			return 0;
+		case SDLK_ESCAPE:
+			SDL_HideWindow( mWindow );
+			return 0;
 		}
 	}
 	return 0;

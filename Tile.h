@@ -72,15 +72,17 @@ class Tile
 
 		bool highlight;
 
+		static bool grid;
+		int type;
+
 	private:
 		static std::string imgPath;
 		static SDL_Rect* spriteClips[ 4 ];
-		static Texture tTex, hl;
+		static Texture tTex, hl, grd;
 		static int instances;
 
 		int posX, posY;
 		static int width, height;
-		int type;
 		/*
 			0: Unclaimed
 			1: Triangle
