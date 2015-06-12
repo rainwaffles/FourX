@@ -31,6 +31,9 @@ public:
 	int getX();
 	int getY();
 
+	int setX(int newX);
+	int setY(int newY);
+
 	int changeType(int newType);
 
 	int getType();

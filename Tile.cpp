@@ -1,13 +1,13 @@
 #include "Tile.h"
 
-std::string Tile::imgPath = "./imgs/claim.png";
+std::string Tile::imgPath = "./imgs/claim.png", Tile::unitImgPath = "./imgs/unit_tileset.png";
 SDL_Rect* Tile::spriteClips[ 4 ];
 SDL_Renderer* Tile::renderer;
-Texture Tile::tTex, Tile::hl;
+Texture Tile::tTex, Tile::hl, Tile::unit;
 int Tile::instances = 0;
 int Tile::width = 30;
 int Tile::height = 30;
-Unit* unit;
+
 
 //Color messing about
 
@@ -21,7 +21,7 @@ Tile::Tile(int t, SDL_Renderer* rend, int x, int y)
 Tile::Tile(int t, int x, int y) : posX(x), posY(y), troops(0), workers(0), 
 									metals(0), oil(0), timber(0), 
 									tMetals(std::rand()%4 + 1), tOil(std::rand()%4 + 1), tTimber(std::rand()%4 + 1),
-									citySize(0), highlight(false)
+									citySize(0), highlight(false), unitHere(false)
 {
 	changeType(t);
 	Tile::instances++;
@@ -37,6 +37,7 @@ Tile::Tile(int t, int x, int y) : posX(x), posY(y), troops(0), workers(0),
 	r[2] = 0;
 	g[2] = 0;
 	b[2] = 255;
+	
 	//productionCapacity = std::rand()%5 + 1;
 }
 
@@ -73,9 +74,14 @@ void Tile::render()
 
 	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
-	printf("SALT CONTENT\n");
-	unit->changeType(0);
-	unit->render();
+	if (unitHere)
+	{
+		printf("IDK\n");
+		/*unit->changeType(Unit::WORKER); 
+		unit->setX(posX);
+		unit->setX(posY);
+		unit->render();*/
+	}
 
 	if(highlight)
 	{
@@ -95,10 +101,10 @@ void Tile::init(SDL_Renderer* rend)
 	tTex.loadFromFile(Tile::imgPath);
 	hl.setRenderer(rend);
 	hl.loadFromFile("./imgs/hl.png");
+	unit.setRenderer(rend);
+	unit.loadFromFile(Tile::unitImgPath);
 	setClips();
 	
-	unit = new Unit(Unit::WORKER, rend, 0, 0);
-	unit ->init(rend);
 
 }
 

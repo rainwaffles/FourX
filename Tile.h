@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <string>
 #include "Texture.h"
-#include "Unit.h"
+//#include "Unit.h"
 
 class Tile
 {
@@ -42,6 +42,7 @@ class Tile
 
 		int getType();
 
+		
 		static void setClips();
 
 		/*
@@ -55,6 +56,12 @@ class Tile
 			TRIANGLE,
 			SQUARE,
 			PENTAGON
+		};
+
+		enum UnitType
+		{
+			TROOPER,
+			WORKERS
 		};
 
 		int troops;
@@ -71,15 +78,17 @@ class Tile
 
 		int citySize;
 
+		bool unitHere;
 		bool highlight;
 
 
 	private:
-		static std::string imgPath;
-		static SDL_Rect* spriteClips[ 4 ];
-		static Texture tTex, hl;
+		static std::string imgPath, unitImgPath;
+		static SDL_Rect* spriteClips[ 4 ], unitClips[ 2 ];
+		static Texture tTex, hl, unit;
 		static int instances;
 		static SDL_Renderer* renderer;
+
 
 		int posX, posY;
 		static int width, height;

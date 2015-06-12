@@ -23,7 +23,6 @@ Unit::Unit(int t, SDL_Renderer* rend, int x, int y)
 
 Unit::Unit(int t, int x, int y) : posX(x), posY(y)
 {
-	printf("I ONLY RUN ONCE\n");
 	changeType(t);
 	Unit::instances++;
 }
@@ -36,17 +35,18 @@ Unit::~Unit()
 void Unit::render()
 {
 	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-	printf("%d %d HELLO \n", posX, posY);
+
 
 
 	if (getType() == SOLDIER)
 	{
-		printf("%d %d HELLO \n", posX, posY);
 		Unit::tTex.render(posX, posY, spriteClips[SOLDIER]);
 	}
 
 	if (getType() == WORKER)
 	{
+		printf("%d type\n", getType());
+		Unit::tTex.render(posX, posY);
 		Unit::tTex.render(posX, posY, spriteClips[WORKER]);
 	}
 
@@ -59,8 +59,9 @@ void Unit::setRenderer(SDL_Renderer* rend)
 
 void Unit::init(SDL_Renderer* rend)
 {
-
+	printf("Hello\n");
 	tTex.setRenderer(rend);
+	printf("Jk\n");
 	tTex.loadFromFile(Unit::imgPath);
 	setClips();
 }
@@ -105,9 +106,23 @@ int Unit::getHeight()
 	return height;
 }
 
+int Unit::setX(int newX)
+{
+	int temp = posX;
+	posY = newX;
+	return temp;
+}
+
 int Unit::getX()
 {
 	return posX;
+}
+
+int Unit::setY(int newY)
+{
+	int temp = posY;
+	posY = newY;
+	return temp;
 }
 
 int Unit::getY()
@@ -117,9 +132,6 @@ int Unit::getY()
 
 int Unit::changeType(int newType)
 {
-	printf("%d %d OMFG \n", posX, posY);
-	std::cin.get();
-
 	int temp = type;
 	type = newType;
 	return temp;

@@ -51,6 +51,7 @@ bool Map::init()
 				tiles[i][j] = new Tile(Tile::TRIANGLE, i*TILE_SIZE_X, j*TILE_SIZE_Y + TILE_SIZE_Y);
 				tiles[i][j]->troops = 2;
 				tiles[i][j]->workers = 2;
+
 			}
 			else {tiles[i][j] = new Tile(0, i*TILE_SIZE_X, j*TILE_SIZE_Y + TILE_SIZE_Y);}
 		}
