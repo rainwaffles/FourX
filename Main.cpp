@@ -263,6 +263,9 @@ int main( int argc, char* args[] )
 					}
 					*/
 					Tile* d = mainMap->handleEvent(e);
+					
+					bool unitMove = false;
+					
 					if(e.type == SDL_KEYDOWN && mainDialog != NULL)
 					{
 						switch( e.key.keysym.sym )
@@ -279,6 +282,22 @@ int main( int argc, char* args[] )
 						case SDLK_a:
 							d = mainMap->get(mainDialog->getTile(), 4);
 							break;
+						case SDLK_UP:
+							d = mainMap->get(mainDialog->getTile(), 1);
+							unitMove = true;
+							break;
+						case SDLK_RIGHT:
+							d = mainMap->get(mainDialog->getTile(), 2);
+							unitMove = true;
+							break;
+						case SDLK_DOWN:
+							d = mainMap->get(mainDialog->getTile(), 3);
+							unitMove = true;
+							break;
+						case SDLK_LEFT:
+							d = mainMap->get(mainDialog->getTile(), 4);
+							unitMove = true;
+							break;
 						}
 					}
 					if(d != NULL)
@@ -290,7 +309,18 @@ int main( int argc, char* args[] )
 						}
 						else
 						{
+							if (unitMove && mainDialog->getTile()->getUnit() != NULL && d->getUnit() == NULL)
+							{
+								Unit* unit = mainDialog->getTile()->removeUnit();
+								unit->setX(d->getX());
+								unit->setY(d->getY());
+
+
+								d->addUnit(unit);
+								mainMap->update = true;
+							}
 							mainDialog->getTile()->highlight = false;
+							
 						}
 						mainDialog->setTile(d);
 						if(mainDialog->isShown()){mainDialog->focus();}
@@ -309,6 +339,10 @@ int main( int argc, char* args[] )
 						case SDLK_e:
 							if(!mainDialog->isShown()){mainDialog->focus();}
 							else{mainDialog->hide();}
+							break;	
+						case SDLK_SPACE:
+							mainMap->nextTurn();
+							mainMap->update = true;
 							break;
 						}
 					}

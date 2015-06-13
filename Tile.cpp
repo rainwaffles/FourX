@@ -143,6 +143,29 @@ void Tile::setClips()
 }
 */
 
+
+Unit* Tile::getUnit()
+{
+	return unit;
+}
+
+Unit* Tile::addUnit(Unit* newUnit)
+{
+	Unit* temp = unit;
+	if (newUnit != NULL)
+	{
+		unit = newUnit;
+	}
+	return temp;
+}
+
+Unit* Tile::removeUnit()
+{
+	Unit* temp = unit;
+	unit = NULL;
+	return temp;
+}
+
 void Tile::free()
 {
 	instances--;

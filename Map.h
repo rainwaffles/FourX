@@ -22,6 +22,7 @@ class Map : public Window
 		bool close;
 		void free();
 		void renderStatus();
+		void nextTurn();
 //		void transfer(int t, int w, Tile *tile, int dir);
 		Tile* get(Tile* t, int dir);
 
@@ -36,6 +37,7 @@ class Map : public Window
 		SDL_Rect* statusClip;
 
 	private:
+		static int turnCount;
 		static std::string imgPath;
 		static Texture background;
 		static SDL_Rect* backrect;

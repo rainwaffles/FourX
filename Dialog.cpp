@@ -57,7 +57,15 @@ void Dialog::render()
 	background->render(0, 0);
 
 	std::stringstream tmp;
-	tmp << "hi, this is where the unit info will be stored";
+	Unit* unit = thisTile->getUnit();
+	if (unit != NULL)
+	{
+		tmp << "Name: " << unit->name << " Health: " << unit->health << " Power: " << unit->power;
+	}
+	else
+	{
+		tmp << "No units here!";
+	}
 	SDL_Surface* textSurface = TTF_RenderText_Solid( Window::gFont, tmp.str().c_str(), Window::textColor );
 	statusClip->w = (textSurface->w / textSurface->h) * (SCREEN_HEIGHT/2);
 	SDL_RenderCopy( mRenderer, SDL_CreateTextureFromSurface( mRenderer, textSurface ), NULL, statusClip );

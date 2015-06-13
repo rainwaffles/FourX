@@ -42,15 +42,20 @@ public:
 
 	enum UnitType
 	{
-		SOLDIER,
-		WORKER
+		RSOLDIER,
+		RWORKER,
+		BSOLDIER,
+		BWORKER
 	};
 
+	std::string name;
+
 	int health;
+	int power;
 
 private:
 	static std::string imgPath;
-	static SDL_Rect* spriteClips[ 2 ];
+	static SDL_Rect* spriteClips[ 4 ];
 	static Texture tTex;
 	static int instances;
 //	static SDL_Renderer* renderer;

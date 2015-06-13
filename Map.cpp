@@ -3,6 +3,7 @@
 std::string Map::imgPath = "./imgs/background.png";
 Texture Map::background;
 SDL_Rect* Map::backrect;
+int Map::turnCount = 0;
 
 bool Map::init()
 {
@@ -57,8 +58,24 @@ bool Map::init()
 	}
 	close = false;
 
-	tiles[5][5]->unit = new Unit(Unit::SOLDIER, 5*TILE_SIZE_X, 5*TILE_SIZE_Y + TILE_SIZE_Y);
-	tiles[5][5]->unit->init(mRenderer);
+	int tempX = (TILES_X - 1)/2;
+	int tempY = (TILES_Y - 1)/2;
+	tiles[tempX][tempY]->unit = new Unit(Unit::RSOLDIER, tempX*TILE_SIZE_X, tempY*TILE_SIZE_Y + TILE_SIZE_Y);
+	tiles[tempX][tempY]->unit->init(mRenderer);
+
+
+	tempX = (TILES_X - 1) / 2 + 1;
+	tempY = (TILES_Y - 1) / 2;
+	tiles[tempX][tempY]->unit = new Unit(Unit::RSOLDIER, tempX*TILE_SIZE_X, tempY*TILE_SIZE_Y + TILE_SIZE_Y);
+
+	tempX = (TILES_X - 1) / 2;
+	tempY = (TILES_Y - 1) / 2 + 1;
+	tiles[tempX][tempY]->unit = new Unit(Unit::RSOLDIER, tempX*TILE_SIZE_X, tempY*TILE_SIZE_Y + TILE_SIZE_Y);
+
+	tempX = (TILES_X - 1) / 2 + 1;
+	tempY = (TILES_Y - 1) / 2 + 1;
+	tiles[tempX][tempY]->unit = new Unit(Unit::RSOLDIER, tempX*TILE_SIZE_X, tempY*TILE_SIZE_Y + TILE_SIZE_Y);
+
 
 	Map::backrect = new SDL_Rect();
 	Map::backrect->h = 1200;
@@ -140,11 +157,18 @@ Tile* Map::get(Tile* tile, int dir)
 	return t1;
 }
 
+void Map::nextTurn()
+{
+	printf("%d\n", turnCount);
+	turnCount = turnCount ;
+}
+
 void Map::renderStatus()
 {
 	std::stringstream tmp;
-	tmp << "HELLO";
-	if(Window::gFont == NULL){Window::gFont = TTF_OpenFont( "./BOOTERFF.ttf", 100 );}
+	tmp << "Turn: " << turnCount;
+	if(Window::gFont == NULL){Window::gFont = TTF_OpenFont( "./fonts/BOOTERFF.ttf", 100 );}
+	SDL_SetRenderDrawColor(mRenderer, 255, 0, 0, 255);
 	SDL_Surface* textSurface = TTF_RenderText_Solid( Window::gFont, tmp.str().c_str(), Window::textColor );
 	statusClip->w = (textSurface->w / textSurface->h) * TILE_SIZE_Y;
 	SDL_RenderCopy( mRenderer, SDL_CreateTextureFromSurface( mRenderer, textSurface ), NULL, statusClip );

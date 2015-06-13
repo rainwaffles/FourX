@@ -80,6 +80,11 @@ class Tile
 		int citySize;
 */
 		Unit *unit;
+
+		Unit* getUnit();
+		Unit* addUnit(Unit* newUnit);
+		Unit* removeUnit();
+
 		bool highlight;
 
 		static bool grid;

@@ -51,7 +51,6 @@ bool Texture::loadFromFile( std::string path )
 			//Get image dimensions
 			mWidth = loadedSurface->w;
 			mHeight = loadedSurface->h;
-			printf("%d %d \n", mWidth, mHeight);
 		}
 
 		//Get rid of old loaded surface

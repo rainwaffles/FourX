@@ -2,12 +2,13 @@
 #include <iostream>
 
 std::string Unit::imgPath = "./imgs/units.png";
-SDL_Rect* Unit::spriteClips[2];
+SDL_Rect* Unit::spriteClips[4];
 //SDL_Renderer* Unit::renderer;
 Texture Unit::tTex;
 int Unit::instances = 0;
 int Unit::width = 30;
 int Unit::height = 30;
+
 
 Unit::Unit()
 {
@@ -22,7 +23,7 @@ Unit::Unit(int t, SDL_Renderer* rend, int x, int y)
 	setRenderer(rend);
 }
 
-Unit::Unit(int t, int x, int y) : posX(x), posY(y)
+Unit::Unit(int t, int x, int y) : posX(x), posY(y), health(0), power(0), name("")
 {
 	changeType(t);
 	Unit::instances++;
@@ -37,16 +38,14 @@ void Unit::render()
 {
 //	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
-	if (getType() == SOLDIER)
+	if (getType() == RSOLDIER)
 	{
-		Unit::tTex.render(posX, posY, spriteClips[SOLDIER]);
+		Unit::tTex.render(posX, posY, spriteClips[RSOLDIER]);
 	}
 
-	if (getType() == WORKER)
+	if (getType() == RWORKER)
 	{
-		printf("%d type\n", getType());
-		Unit::tTex.render(posX, posY);
-		Unit::tTex.render(posX, posY, spriteClips[WORKER]);
+		Unit::tTex.render(posX, posY, spriteClips[RWORKER]);
 	}
 
 }
@@ -58,26 +57,36 @@ void Unit::setRenderer(SDL_Renderer* rend)
 
 void Unit::init(SDL_Renderer* rend)
 {
-	printf("Hello\n");
 	tTex.setRenderer(rend);
-	printf("Jk\n");
 	tTex.loadFromFile(Unit::imgPath);
 	setClips();
 }
 
 void Unit::setClips()
 {
-	Unit::spriteClips[SOLDIER] = new SDL_Rect();
-	Unit::spriteClips[SOLDIER]->x = 0;
-	Unit::spriteClips[SOLDIER]->y = 0;
-	Unit::spriteClips[SOLDIER]->w = 30;
-	Unit::spriteClips[SOLDIER]->h = 30;
+	Unit::spriteClips[BSOLDIER] = new SDL_Rect();
+	Unit::spriteClips[BSOLDIER]->x = 0;
+	Unit::spriteClips[BSOLDIER]->y = 0;
+	Unit::spriteClips[BSOLDIER]->w = 30;
+	Unit::spriteClips[BSOLDIER]->h = 30;
 
-	Unit::spriteClips[WORKER] = new SDL_Rect();
-	Unit::spriteClips[WORKER]->x = 30;
-	Unit::spriteClips[WORKER]->y = 0;
-	Unit::spriteClips[WORKER]->w = 60;
-	Unit::spriteClips[WORKER]->h = 60;
+	Unit::spriteClips[BWORKER] = new SDL_Rect();
+	Unit::spriteClips[BWORKER]->x = 30;
+	Unit::spriteClips[BWORKER]->y = 0;
+	Unit::spriteClips[BWORKER]->w = 30;
+	Unit::spriteClips[BWORKER]->h = 30;
+	
+	Unit::spriteClips[RSOLDIER] = new SDL_Rect();
+	Unit::spriteClips[RSOLDIER]->x = 30;
+	Unit::spriteClips[RSOLDIER]->y = 0;
+	Unit::spriteClips[RSOLDIER]->w = 30;
+	Unit::spriteClips[RSOLDIER]->h = 30;
+
+	Unit::spriteClips[RWORKER] = new SDL_Rect();
+	Unit::spriteClips[RWORKER]->x = 35;
+	Unit::spriteClips[RWORKER]->y = 30;
+	Unit::spriteClips[RWORKER]->w = 30;
+	Unit::spriteClips[RWORKER]->h = 30;
 
 }
 
@@ -107,8 +116,10 @@ int Unit::getHeight()
 
 int Unit::setX(int newX)
 {
+
 	int temp = posX;
-	posY = newX;
+	posX = newX;
+
 	return temp;
 }
 
@@ -133,7 +144,24 @@ int Unit::changeType(int newType)
 {
 	int temp = type;
 	type = newType;
+
+
+	switch (type)
+	{
+	case RSOLDIER:
+		health = 3;
+		power = 3;
+		name = "Red Soldier";
+		break;
+	case BSOLDIER:
+		health = 3;
+		power = 3;
+		name = "Blue Soldier";
+		break;
+	}
+
 	return temp;
+
 }
 
 int Unit::getType()
