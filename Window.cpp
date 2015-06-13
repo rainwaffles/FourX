@@ -1,7 +1,7 @@
 #include "Window.h"
 
 TTF_Font* Window::gFont;
-SDL_Color Window::textColor = {0,0,0};
+SDL_Color Window::textColor = {255,255,255};
 
 Window::Window()
 {

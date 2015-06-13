@@ -173,7 +173,6 @@ void Map::nextTurn()
 		}
 	}
 	turnCount = turnCount + 1;
-	turnCount++;
 }
 
 void Map::renderStatus()
