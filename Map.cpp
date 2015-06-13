@@ -58,22 +58,22 @@ bool Map::init()
 	}
 	close = false;
 
-	int tempX = (TILES_X - 1)/2;
-	int tempY = (TILES_Y - 1)/2;
+	int tempX = (TILES_X - 1);
+	int tempY = (TILES_Y - 1);
 	tiles[tempX][tempY]->unit = new Unit(Unit::RSOLDIER, tempX*TILE_SIZE_X, tempY*TILE_SIZE_Y + TILE_SIZE_Y);
 	tiles[tempX][tempY]->unit->init(mRenderer);
 
 
-	tempX = (TILES_X - 1) / 2 + 1;
-	tempY = (TILES_Y - 1) / 2;
+	tempX = (TILES_X - 1) - 1;
+	tempY = (TILES_Y - 1) - 1;
 	tiles[tempX][tempY]->unit = new Unit(Unit::RSOLDIER, tempX*TILE_SIZE_X, tempY*TILE_SIZE_Y + TILE_SIZE_Y);
 
-	tempX = (TILES_X - 1) / 2;
-	tempY = (TILES_Y - 1) / 2 + 1;
+	tempX = (TILES_X - 1) - 1;
+	tempY = (TILES_Y - 1);
 	tiles[tempX][tempY]->unit = new Unit(Unit::RSOLDIER, tempX*TILE_SIZE_X, tempY*TILE_SIZE_Y + TILE_SIZE_Y);
 
-	tempX = (TILES_X - 1) / 2 + 1;
-	tempY = (TILES_Y - 1) / 2 + 1;
+	tempX = (TILES_X - 1);
+	tempY = (TILES_Y - 1) - 1;
 	tiles[tempX][tempY]->unit = new Unit(Unit::RSOLDIER, tempX*TILE_SIZE_X, tempY*TILE_SIZE_Y + TILE_SIZE_Y);
 
 
@@ -160,7 +160,7 @@ Tile* Map::get(Tile* tile, int dir)
 void Map::nextTurn()
 {
 	printf("%d\n", turnCount);
-<<<<<<< HEAD
+
 	for (int i = 0; i < TILES_X; i++)
 	{
 		for (int j = 0; j < TILES_Y; j++)
@@ -173,9 +173,7 @@ void Map::nextTurn()
 		}
 	}
 	turnCount = turnCount + 1;
-=======
 	turnCount++;
->>>>>>> 4e58b764eb9c3b7098bf0c065a40317d421a565c
 }
 
 void Map::renderStatus()

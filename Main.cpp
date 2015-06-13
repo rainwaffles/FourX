@@ -187,9 +187,12 @@ void highlightMovement(Tile* d, int speed)
 		
 		if (tile != NULL)
 		{
-			tile->movement = true;
+			if (tile->getUnit() == NULL)
+			{
+				tile->movement = true;
 
-			highlightMovement(tile, speed - 1);
+				highlightMovement(tile, speed - 1);
+			}
 		}
 	}
 
@@ -326,6 +329,7 @@ int main( int argc, char* args[] )
 							mainMap->nextTurn();
 							mainDialog->update = true;
 							mainMap->update = true;
+							if (mainDialog->getTile()->getUnit() != NULL){ highlightMovement(mainDialog->getTile(), mainDialog->getTile()->getUnit()->speed); }
 							break;
 						}
 					}
