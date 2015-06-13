@@ -26,6 +26,9 @@ const int SCREEN_HEIGHT = TILES_Y*TILE_SIZE_Y;
 //Starts up SDL and creates window
 bool init();
 
+//highlights movement
+void highlightMovement(Tile* d);
+
 //Loads media
 bool loadMedia();
 
@@ -40,8 +43,8 @@ SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 
 //The tiles
-Tile *tiles[TILES_X][TILES_Y];
 */
+
 
 Map* mainMap;
 Dialog* mainDialog = NULL;
@@ -171,6 +174,27 @@ void close()
 	SDL_Quit();
 }
 
+void highlightMovement(Tile* d, int speed)
+{
+	if (speed <= 0)
+	{
+		return;
+	}
+
+	for (int i = 1; i <= 4; i++)
+	{
+		Tile* tile = mainMap->get(d, i);
+		
+		if (tile != NULL)
+		{
+			tile->movement = true;
+
+			highlightMovement(tile, speed - 1);
+		}
+	}
+
+}
+
 int main( int argc, char* args[] )
 {
 	//Start up SDL and create window
@@ -298,6 +322,11 @@ int main( int argc, char* args[] )
 							d = mainMap->get(mainDialog->getTile(), 4);
 							unitMove = true;
 							break;
+						case SDLK_SPACE:
+							mainMap->nextTurn();
+							mainDialog->update = true;
+							mainMap->update = true;
+							break;
 						}
 					}
 					if(d != NULL)
@@ -309,18 +338,34 @@ int main( int argc, char* args[] )
 						}
 						else
 						{
-							if (unitMove && mainDialog->getTile()->getUnit() != NULL && d->getUnit() == NULL)
+
+							Unit* unit = mainDialog->getTile()->getUnit();
+
+							if (unit != NULL)
 							{
-								Unit* unit = mainDialog->getTile()->removeUnit();
-								unit->setX(d->getX());
-								unit->setY(d->getY());
 
+								if (unit->currentSpeed > 0)
+								{
+									
+									if (unitMove && d->getUnit() == NULL)
+									{
+										mainDialog->getTile()->removeUnit();
+										unit->setX(d->getX());
+										unit->setY(d->getY());
+										unit->currentSpeed--;
+										d->addUnit(unit);
+									}
+									mainMap->update = true;
+									mainDialog->update = true;
+									
+								}
 
-								d->addUnit(unit);
-								mainMap->update = true;
 							}
 							mainDialog->getTile()->highlight = false;
-							
+							if (d->getUnit() != NULL)
+							{
+								highlightMovement(d, d->getUnit()->currentSpeed);
+							}
 						}
 						mainDialog->setTile(d);
 						if(mainDialog->isShown()){mainDialog->focus();}
@@ -340,10 +385,6 @@ int main( int argc, char* args[] )
 							if(!mainDialog->isShown()){mainDialog->focus();}
 							else{mainDialog->hide();}
 							break;	
-						case SDLK_SPACE:
-							mainMap->nextTurn();
-							mainMap->update = true;
-							break;
 						}
 					}
 				}

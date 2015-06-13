@@ -38,6 +38,8 @@ public:
 
 	int getType();
 
+	void newTurn();
+
 	static void setClips();
 
 	enum UnitType
@@ -52,6 +54,8 @@ public:
 
 	int health;
 	int power;
+	int speed;
+	int currentSpeed;
 
 private:
 	static std::string imgPath;

@@ -19,12 +19,12 @@ Tile::Tile(SDL_Renderer* rend, int x, int y)
 	setRenderer(rend);
 }
 
-Tile::Tile(int x, int y) : posX(x), posY(y), highlight(false)
+Tile::Tile(int x, int y) : posX(x), posY(y), highlight(false), movement(false)
 {
 	//changeType(t);
 	Tile::instances++;
 	unit = NULL;
-	/*
+	
 	a = 255 * .25;
 	r[0] = 255;
 	g[0] = 0;
@@ -37,7 +37,7 @@ Tile::Tile(int x, int y) : posX(x), posY(y), highlight(false)
 	r[2] = 0;
 	g[2] = 0;
 	b[2] = 255;
-	*/
+	
 	//productionCapacity = std::rand()%5 + 1;
 }
 
@@ -73,7 +73,14 @@ void Tile::render()
 	}
 	*/
 	//SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-
+	if (movement)
+	{
+		tTex.setColor(r[2], g[2], b[2]);
+		tTex.setAlpha(a);
+		Tile::tTex.render(posX, posY);
+		movement = false;
+	}
+	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 	if(unit != NULL)
 	{
 		unit->render();
@@ -86,6 +93,7 @@ void Tile::render()
 		*/
 	}
 
+	
 	if(highlight)
 	{
 		Tile::hl.render(posX, posY);

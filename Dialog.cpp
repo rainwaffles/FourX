@@ -60,7 +60,7 @@ void Dialog::render()
 	Unit* unit = thisTile->getUnit();
 	if (unit != NULL)
 	{
-		tmp << "Name: " << unit->name << " Health: " << unit->health << " Power: " << unit->power;
+		tmp << "Name: " << unit->name << " Health: " << unit->health << " Power: " << unit->power << " Speed: " << unit->currentSpeed <<"/" << unit->speed;
 	}
 	else
 	{

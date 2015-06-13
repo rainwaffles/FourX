@@ -23,7 +23,7 @@ Unit::Unit(int t, SDL_Renderer* rend, int x, int y)
 	setRenderer(rend);
 }
 
-Unit::Unit(int t, int x, int y) : posX(x), posY(y), health(0), power(0), name("")
+Unit::Unit(int t, int x, int y) : posX(x), posY(y), health(0), power(0), speed(0), currentSpeed(0), name("")
 {
 	changeType(t);
 	Unit::instances++;
@@ -140,6 +140,11 @@ int Unit::getY()
 	return posY;
 }
 
+void Unit::newTurn()
+{
+	Unit::currentSpeed = speed;
+}
+
 int Unit::changeType(int newType)
 {
 	int temp = type;
@@ -151,11 +156,13 @@ int Unit::changeType(int newType)
 	case RSOLDIER:
 		health = 3;
 		power = 3;
+		speed = 2;
 		name = "Red Soldier";
 		break;
 	case BSOLDIER:
 		health = 3;
 		power = 3;
+		speed = 2;
 		name = "Blue Soldier";
 		break;
 	}

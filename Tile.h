@@ -85,7 +85,7 @@ class Tile
 		Unit* addUnit(Unit* newUnit);
 		Unit* removeUnit();
 
-		bool highlight;
+		bool highlight, movement;
 
 		static bool grid;
 //		int type;
@@ -101,7 +101,7 @@ class Tile
 		int posX, posY;
 		static int width, height;
 
-//		Uint8 r[ 3 ], g[ 3 ], b[ 3 ], a;
+		Uint8 r[ 3 ], g[ 3 ], b[ 3 ], a;
 };
 
 #endif

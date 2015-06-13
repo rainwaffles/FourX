@@ -160,7 +160,18 @@ Tile* Map::get(Tile* tile, int dir)
 void Map::nextTurn()
 {
 	printf("%d\n", turnCount);
-	turnCount = turnCount ;
+	for (int i = 0; i < TILES_X; i++)
+	{
+		for (int j = 0; j < TILES_Y; j++)
+		{
+			Unit* unit = tiles[i][j]->getUnit();
+			if (unit != NULL)
+			{
+				unit->newTurn();
+			}
+		}
+	}
+	turnCount = turnCount + 1;
 }
 
 void Map::renderStatus()
