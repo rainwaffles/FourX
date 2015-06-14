@@ -19,11 +19,10 @@ Tile::Tile(SDL_Renderer* rend, int x, int y)
 	setRenderer(rend);
 }
 
-Tile::Tile(int x, int y) : posX(x), posY(y), highlight(false), movement(false)
+Tile::Tile(int x, int y) : posX(x), posY(y), highlight(false), movement(false), unit(NULL)
 {
 	//changeType(t);
 	Tile::instances++;
-	unit = NULL;
 	
 	a = 255 * .25;
 	r[0] = 255;

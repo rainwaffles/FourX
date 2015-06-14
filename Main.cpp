@@ -221,6 +221,9 @@ int main( int argc, char* args[] )
 			SDL_Event e;
 			
 			mainMap->nextTurn();
+			mainMap->nextTurn();
+
+			Unit::UnitType curTurn = static_cast<Unit::UnitType>(Map::turnCount%2);
 
 			//While application is running
 			while( !quit && mainMap->close != true)
@@ -331,11 +334,13 @@ int main( int argc, char* args[] )
 							mainMap->nextTurn();
 							mainDialog->update = true;
 							mainMap->update = true;
-							if (mainDialog->getTile()->getUnit() != NULL){ highlightMovement(mainDialog->getTile(), mainDialog->getTile()->getUnit()->speed); }
+							curTurn = static_cast<Unit::UnitType>(Map::turnCount%2);
+							if (mainDialog->getTile()->getUnit() != NULL && mainDialog->getTile()->getUnit()->getType() == curTurn)
+							{ highlightMovement(mainDialog->getTile(), mainDialog->getTile()->getUnit()->currentSpeed); }
 							break;
 						}
 					}
-					bool move = !unitMove;
+
 					if(d != NULL)
 					{
 						if(mainDialog == NULL)
@@ -343,7 +348,12 @@ int main( int argc, char* args[] )
 							mainDialog = new Dialog();
 							mainDialog->init();
 						}
-						else
+						bool move = !unitMove;
+						if(mainDialog->getTile() != NULL 
+							&& mainDialog->getTile()->getUnit() != NULL 
+							&& mainDialog->getTile()->getUnit()->getType() != curTurn)
+						{unitMove = false;}
+						if(mainDialog->getTile() != NULL)
 						{
 
 							Unit* here = mainDialog->getTile()->getUnit();
@@ -392,7 +402,7 @@ int main( int argc, char* args[] )
 							if(mainDialog->isShown()){mainDialog->focus();}
 							mainDialog->getTile()->highlight = true;
 						}
-						if (mainDialog->getTile()->getUnit() != NULL)
+						if (mainDialog->getTile()->getUnit() != NULL && mainDialog->getTile()->getUnit()->getType() == curTurn)
 						{
 							highlightMovement(mainDialog->getTile(), mainDialog->getTile()->getUnit()->currentSpeed);
 						}

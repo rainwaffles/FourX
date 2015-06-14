@@ -12,11 +12,11 @@ class Unit
 {
 public:
 	//Constructor
-	enum UnitType
+	static enum UnitType
 	{
 		RSOLDIER,
-		RWORKER,
 		BSOLDIER,
+		RWORKER,
 		BWORKER,
 		NONE
 	};	
@@ -47,8 +47,6 @@ public:
 	void newTurn();
 
 	static void setClips();
-
-
 
 	std::string name;
 

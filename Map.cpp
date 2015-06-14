@@ -3,7 +3,7 @@
 std::string Map::imgPath = "./imgs/background.png";
 Texture Map::background;
 SDL_Rect* Map::backrect;
-int Map::turnCount = 0; //Blue goes first
+int Map::turnCount = -1; //Blue goes first
 
 bool Map::init()
 {
@@ -175,20 +175,20 @@ Tile* Map::get(Tile* tile, int dir)
 
 void Map::nextTurn()
 {
-	printf("%d\n", turnCount);
+	turnCount++;
+//	printf("%d\n", turnCount);
 
 	for (int i = 0; i < TILES_X; i++)
 	{
 		for (int j = 0; j < TILES_Y; j++)
 		{
 			Unit* unit = tiles[i][j]->getUnit();
-			if (unit != NULL)
+			if (unit != NULL && unit->getType() == static_cast<Unit::UnitType>(Map::turnCount%2))
 			{
 				unit->newTurn();
 			}
 		}
 	}
-	turnCount = turnCount + 1;
 }
 
 void Map::renderStatus()
