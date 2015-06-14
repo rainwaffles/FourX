@@ -56,7 +56,7 @@ class Window
 		int mWindowID;
 
 		static const int SCREEN_WIDTH = 280;
-		static const int SCREEN_HEIGHT = 100;
+		static const int SCREEN_HEIGHT = 80;
 
 
 		//Window dimensions

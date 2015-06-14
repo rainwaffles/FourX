@@ -67,7 +67,7 @@ void Dialog::render()
 		statusClip->w = (textSurface->w / textSurface->h) * (SCREEN_HEIGHT/2);
 		SDL_RenderCopy( mRenderer, SDL_CreateTextureFromSurface( mRenderer, textSurface ), NULL, statusClip );
 		tmp.str("");
-		tmp << " HP: " << unit->health << " ATK: " << unit->power;
+		tmp << " HP: " << unit->health << "/" << unit->maxHealth << " ATK: " << unit->power;
 	}
 	else
 	{

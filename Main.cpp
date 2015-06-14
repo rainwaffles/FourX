@@ -335,6 +335,7 @@ int main( int argc, char* args[] )
 							break;
 						}
 					}
+					bool move = !unitMove;
 					if(d != NULL)
 					{
 						if(mainDialog == NULL)
@@ -347,17 +348,17 @@ int main( int argc, char* args[] )
 
 							Unit* here = mainDialog->getTile()->getUnit();
 
-							if (unitMove && here != NULL)
+							if (unitMove && here != NULL && here->currentSpeed > 0)
 							{
 
-								if (here->currentSpeed > 0 && d->getUnit() == NULL)
+								if (d->getUnit() == NULL)
 								{
-									
 									mainDialog->getTile()->removeUnit();
 									here->setX(d->getX());
 									here->setY(d->getY());
 									here->currentSpeed--;
 									d->addUnit(here);
+									move = true;
 								}
 								else if(d->getUnit() != NULL && here->oppType() == d->getUnit()->getType())
 								{
@@ -371,9 +372,12 @@ int main( int argc, char* args[] )
 										here->setX(d->getX());
 										here->setY(d->getY());
 										here->currentSpeed--;
-										d->addUnit(here);
+										delete d->addUnit(here);
+										move = true;
 										break;
 									case -1:
+										delete mainDialog->getTile()->removeUnit();
+										here->currentSpeed--;
 										break;
 									}
 								}
@@ -384,11 +388,14 @@ int main( int argc, char* args[] )
 						{
 							highlightMovement(d, d->getUnit()->currentSpeed);
 						}
-						mainDialog->setTile(d);
-						if(mainDialog->isShown()){mainDialog->focus();}
-						mainDialog->update = true;
-						d->highlight = true;
-						mainMap->update = true;
+						if(move)
+						{
+							mainDialog->setTile(d);
+							if(mainDialog->isShown()){mainDialog->focus();}
+							mainDialog->update = true;
+							d->highlight = true;
+							mainMap->update = true;
+						}
 					}
 					if(e.type == SDL_KEYDOWN)
 					{

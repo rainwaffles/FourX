@@ -58,6 +58,7 @@ public:
 	UnitType changeType(UnitType newType);
 
 	int health;
+	int maxHealth;
 	int power;
 	int speed;
 	int currentSpeed;

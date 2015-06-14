@@ -143,19 +143,20 @@ Unit::UnitType Unit::changeType(UnitType newType)
 	switch (type)
 	{
 	case RSOLDIER:
-		health = 20 + std::rand()%8;
-		power = 2*std::rand()%4 + 2;
+		maxHealth = 46 + std::rand()%6;
+		power = 10;
 		speed = 3;
 		name = "Red Soldier";
 		break;
 	case BSOLDIER:
-		health = 16 + std::rand()%6;
-		power = std::rand()%4 + std::rand()%5 + 3;
+		maxHealth = 39 + std::rand()%4;
+		power = 12;
 		speed = 3 + std::rand()%1;
 		name = "Blue Soldier";
 		break;
 	}
-
+	health = maxHealth;
+	
 	return temp;
 
 }
@@ -179,5 +180,9 @@ int Unit::fight(Unit *enemy)
 	0: tie
 	-1: loss
 	*/
-	return 1;
+	enemy->health -= power + std::rand()%3;
+	if(enemy->health <= 0){return 1;}
+	health -= enemy->power + std::rand()%3;
+	if(health <= 0){return -1;}
+	return 0;
 }
