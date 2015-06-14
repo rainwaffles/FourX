@@ -41,6 +41,8 @@ Mix_Music *gMusic = NULL;
 
 //The sound effects that will be used
 Mix_Chunk *gSword = NULL;
+Mix_Chunk *gMovement = NULL;
+Mix_Chunk *gNextTurn = NULL;
 
 /*
 //The window we'll be rendering to
@@ -148,11 +150,35 @@ bool loadMedia()
 	//Loading success flag
 	bool success = true;
 	
+	gMusic = Mix_LoadMUS("./sound/music.mp3");
+
+	if (gMusic == NULL)
+	{
+		printf("Failed to load music music! SDL_mixer Error: %s\n", Mix_GetError());
+		success = false;
+	}
+
 	gSword = Mix_LoadWAV("./sound/swords.wav");
 
 	if (gSword == NULL)
 	{
 		printf("Failed to load swords music! DL_mixer Error: %s\n", Mix_GetError());
+		success = false;
+	}
+
+	gMovement = Mix_LoadWAV("./sound/movement.wav");
+
+	if (gMovement == NULL)
+	{
+		printf("Failed to load movement music! DL_mixer Error: %s\n", Mix_GetError());
+		success = false;
+	}
+
+	gNextTurn= Mix_LoadWAV("./sound/nextTurn.wav");
+
+	if (gNextTurn == NULL)
+	{
+		printf("Failed to load movement music! DL_mixer Error: %s\n", Mix_GetError());
 		success = false;
 	}
 
@@ -192,7 +218,11 @@ void close()
 	}
 
 	Mix_FreeChunk(gSword);
-
+	Mix_FreeChunk(gNextTurn);
+	Mix_FreeChunk(gMovement);
+	gSword = NULL;
+	gNextTurn = NULL;
+	gMovement = NULL;
 	//Free the music
 	Mix_FreeMusic(gMusic);
 	gMusic = NULL;
@@ -324,6 +354,11 @@ int main( int argc, char* args[] )
 					
 					bool unitMove = false;
 					
+					if (Mix_PlayingMusic() == 0)
+					{
+						Mix_PlayMusic(gMusic, -1);
+					}
+
 					if(e.type == SDL_KEYDOWN && mainDialog != NULL)
 					{
 						switch( e.key.keysym.sym )
@@ -361,6 +396,7 @@ int main( int argc, char* args[] )
 							mainDialog->update = true;
 							mainMap->update = true;
 							if (mainDialog->getTile()->getUnit() != NULL){ highlightMovement(mainDialog->getTile(), mainDialog->getTile()->getUnit()->speed); }
+							Mix_PlayChannel(-1, gNextTurn, 0);
 							break;
 						}
 					}
@@ -388,6 +424,7 @@ int main( int argc, char* args[] )
 									here->currentSpeed--;
 									d->addUnit(here);
 									move = true;
+									Mix_PlayChannel(-1, gMovement, 0);
 								}
 								else if(d->getUnit() != NULL && here->oppType() == d->getUnit()->getType())
 								{
