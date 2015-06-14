@@ -26,8 +26,8 @@ void Dialog::init()
 	tw->x = SCREEN_WIDTH - 120;
 	tw->y = SCREEN_HEIGHT/2;
 */
-	compass = new Texture(mRenderer);
-	compass->loadFromFile("./imgs/compass.png");
+//	compass = new Texture(mRenderer);
+//	compass->loadFromFile("./imgs/compass.png");
 //	arrows = new Texture(mRenderer);
 //	arrows->loadFromFile("./imgs/arrows.png");
 	background = new Texture(mRenderer);
@@ -57,21 +57,22 @@ void Dialog::render()
 	background->render(0, 0);
 
 	std::stringstream tmp;
+	SDL_Surface* textSurface;
+
 	Unit* unit = thisTile->getUnit();
 	if (unit != NULL)
 	{
-		tmp << "Name: " << unit->name << " Health: " << unit->health << " Power: " << unit->power << " Speed: " << unit->currentSpeed <<"/" << unit->speed;
+		tmp << unit->name << " " << unit->currentSpeed << "/" << unit->speed;
+		SDL_Surface* textSurface = TTF_RenderText_Solid( Window::gFont, tmp.str().c_str(), Window::textColor );
+		statusClip->w = (textSurface->w / textSurface->h) * (SCREEN_HEIGHT/2);
+		SDL_RenderCopy( mRenderer, SDL_CreateTextureFromSurface( mRenderer, textSurface ), NULL, statusClip );
+		tmp.str("");
+		tmp << " HP: " << unit->health << " ATK: " << unit->power;
 	}
 	else
 	{
 		tmp << "No units here!";
 	}
-	SDL_Surface* textSurface = TTF_RenderText_Solid( Window::gFont, tmp.str().c_str(), Window::textColor );
-	statusClip->w = (textSurface->w / textSurface->h) * (SCREEN_HEIGHT/2);
-	SDL_RenderCopy( mRenderer, SDL_CreateTextureFromSurface( mRenderer, textSurface ), NULL, statusClip );
-
-	tmp.str("");
-	tmp << "terrain info I guess";
 	textSurface = TTF_RenderText_Solid( Window::gFont, tmp.str().c_str(), Window::textColor );
 	statusClip2->w = (textSurface->w / textSurface->h) * (SCREEN_HEIGHT/2);
 	SDL_RenderCopy( mRenderer, SDL_CreateTextureFromSurface( mRenderer, textSurface ), NULL, statusClip2 );
@@ -89,7 +90,7 @@ void Dialog::render()
 	SDL_RenderCopy( mRenderer, SDL_CreateTextureFromSurface( mRenderer, textSurface ), NULL, tw );
 	*/
 
-	compass->render(SCREEN_WIDTH - 80, 0);
+//	compass->render(SCREEN_WIDTH - 80, 0);
 	/*
 	arrows->render(SCREEN_WIDTH - 160, 40);
 	arrows->render(SCREEN_WIDTH - 240, 40);
@@ -105,6 +106,7 @@ int Dialog::handleEvent(SDL_Event &e)
 	{
 		int x, y;
 		SDL_GetMouseState(&x, &y);
+		/*
 		if(x > SCREEN_WIDTH - 65 && x < SCREEN_WIDTH - 15 &&
 		   y > 0 && y < 20)
 		{
@@ -129,6 +131,7 @@ int Dialog::handleEvent(SDL_Event &e)
 			update = true;
 			return 4; //West
 		}
+		*/
 		/*
 		else if(x > SCREEN_WIDTH - 160 && x < SCREEN_WIDTH - 120 &&
 		   y > SCREEN_HEIGHT - 40 && y < SCREEN_HEIGHT - 20)
@@ -164,6 +167,7 @@ int Dialog::handleEvent(SDL_Event &e)
 	{
 		switch( e.key.keysym.sym )
 		{
+		/*
 		case SDLK_UP:
 			update = true;
 			return 1;
@@ -176,6 +180,7 @@ int Dialog::handleEvent(SDL_Event &e)
 		case SDLK_LEFT:
 			update = true;
 			return 4;
+		*/
 		/*
 		case SDLK_KP_PLUS:
 			if(thisTile->troops > transferT) transferT++;
@@ -203,6 +208,6 @@ void Dialog::free()
 {
 	super::free();
 	delete statusClip;
-	compass->free();
-	delete compass;
+//	compass->free();
+//	delete compass;
 }

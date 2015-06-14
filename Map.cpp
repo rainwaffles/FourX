@@ -3,7 +3,7 @@
 std::string Map::imgPath = "./imgs/background.png";
 Texture Map::background;
 SDL_Rect* Map::backrect;
-int Map::turnCount = 1;
+int Map::turnCount = 0;
 
 bool Map::init()
 {
@@ -75,6 +75,22 @@ bool Map::init()
 	tempX = (TILES_X - 1);
 	tempY = (TILES_Y - 1) - 1;
 	tiles[tempX][tempY]->unit = new Unit(Unit::RSOLDIER, tempX*TILE_SIZE_X, tempY*TILE_SIZE_Y + TILE_SIZE_Y);
+
+	tempX = 0;
+	tempY = 0;
+	tiles[tempX][tempY]->unit = new Unit(Unit::BSOLDIER, tempX*TILE_SIZE_X, tempY*TILE_SIZE_Y + TILE_SIZE_Y);
+
+	tempX = 0;
+	tempY = 1;
+	tiles[tempX][tempY]->unit = new Unit(Unit::BSOLDIER, tempX*TILE_SIZE_X, tempY*TILE_SIZE_Y + TILE_SIZE_Y);
+	
+	tempX = 1;
+	tempY = 0;
+	tiles[tempX][tempY]->unit = new Unit(Unit::BSOLDIER, tempX*TILE_SIZE_X, tempY*TILE_SIZE_Y + TILE_SIZE_Y);
+	
+	tempX = 1;
+	tempY = 1;
+	tiles[tempX][tempY]->unit = new Unit(Unit::BSOLDIER, tempX*TILE_SIZE_X, tempY*TILE_SIZE_Y + TILE_SIZE_Y);
 
 
 	Map::backrect = new SDL_Rect();

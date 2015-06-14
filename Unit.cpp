@@ -37,17 +37,7 @@ Unit::~Unit()
 void Unit::render()
 {
 //	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-
-	if (getType() == RSOLDIER)
-	{
-		Unit::tTex.render(posX, posY, spriteClips[RSOLDIER]);
-	}
-
-	if (getType() == RWORKER)
-	{
-		Unit::tTex.render(posX, posY, spriteClips[RWORKER]);
-	}
-
+	Unit::tTex.render(posX, posY, spriteClips[getType()]);
 }
 
 void Unit::setRenderer(SDL_Renderer* rend)
@@ -153,15 +143,15 @@ Unit::UnitType Unit::changeType(UnitType newType)
 	switch (type)
 	{
 	case RSOLDIER:
-		health = 3;
-		power = 3;
-		speed = 2;
+		health = 20 + std::rand()%8;
+		power = 2*std::rand()%4 + 2;
+		speed = 3;
 		name = "Red Soldier";
 		break;
 	case BSOLDIER:
-		health = 3;
-		power = 3;
-		speed = 2;
+		health = 16 + std::rand()%6;
+		power = std::rand()%4 + std::rand()%5 + 3;
+		speed = 3 + std::rand()%1;
 		name = "Blue Soldier";
 		break;
 	}

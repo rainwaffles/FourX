@@ -191,6 +191,7 @@ void Tile::free()
 			delete Tile::spriteClips[i];
 		}
 	}
+	if(unit != NULL){delete unit;}
 }
 
 int Tile::getWidth()

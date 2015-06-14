@@ -364,8 +364,14 @@ int main( int argc, char* args[] )
 									switch(here->fight(d->getUnit()))
 									{
 									case 0:
+										here->currentSpeed--;
 										break;
 									case 1:
+										mainDialog->getTile()->removeUnit();
+										here->setX(d->getX());
+										here->setY(d->getY());
+										here->currentSpeed--;
+										d->addUnit(here);
 										break;
 									case -1:
 										break;
