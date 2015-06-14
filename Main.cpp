@@ -365,13 +365,13 @@ int main( int argc, char* args[] )
 									switch(here->fight(d->getUnit()))
 									{
 									case 0:
-										here->currentSpeed--;
+										here->currentSpeed = 0;
 										break;
 									case 1:
 										mainDialog->getTile()->removeUnit();
 										here->setX(d->getX());
 										here->setY(d->getY());
-										here->currentSpeed--;
+										here->currentSpeed = 0;
 										delete d->addUnit(here);
 										move = true;
 										break;
