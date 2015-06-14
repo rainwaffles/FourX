@@ -58,38 +58,62 @@ bool Map::init()
 	}
 	close = false;
 
-	int tempX = (TILES_X - 1);
-	int tempY = (TILES_Y - 1);
+	int tempX = (TILES_X - 10);
+	int tempY = (TILES_Y - 10);
 	tiles[tempX][tempY]->unit = new Unit(Unit::RSOLDIER, tempX*TILE_SIZE_X, tempY*TILE_SIZE_Y + TILE_SIZE_Y);
 	tiles[tempX][tempY]->unit->init(mRenderer);
 
 
-	tempX = (TILES_X - 1) - 1;
-	tempY = (TILES_Y - 1) - 1;
+	tempX = (TILES_X - 10) - 1;
+	tempY = (TILES_Y - 10) - 1;
 	tiles[tempX][tempY]->unit = new Unit(Unit::RSOLDIER, tempX*TILE_SIZE_X, tempY*TILE_SIZE_Y + TILE_SIZE_Y);
 
-	tempX = (TILES_X - 1) - 1;
-	tempY = (TILES_Y - 1);
+	tempX = (TILES_X - 10) - 1;
+	tempY = (TILES_Y - 10);
 	tiles[tempX][tempY]->unit = new Unit(Unit::RSOLDIER, tempX*TILE_SIZE_X, tempY*TILE_SIZE_Y + TILE_SIZE_Y);
 
-	tempX = (TILES_X - 1);
-	tempY = (TILES_Y - 1) - 1;
+	tempX = (TILES_X - 10);
+	tempY = (TILES_Y - 10) - 1;
 	tiles[tempX][tempY]->unit = new Unit(Unit::RSOLDIER, tempX*TILE_SIZE_X, tempY*TILE_SIZE_Y + TILE_SIZE_Y);
 
-	tempX = 0;
-	tempY = 0;
+	tempX = (TILES_X - 10) - 2;
+	tempY = (TILES_Y - 10) - 1;
+	tiles[tempX][tempY]->unit = new Unit(Unit::RSOLDIER, tempX*TILE_SIZE_X, tempY*TILE_SIZE_Y + TILE_SIZE_Y);
+
+	tempX = (TILES_X - 10) - 1;
+	tempY = (TILES_Y - 10) - 2;
+	tiles[tempX][tempY]->unit = new Unit(Unit::RSOLDIER, tempX*TILE_SIZE_X, tempY*TILE_SIZE_Y + TILE_SIZE_Y);
+
+	tempX = (TILES_X - 10) - 2;
+	tempY = (TILES_Y - 10) - 2;
+	tiles[tempX][tempY]->unit = new Unit(Unit::RSOLDIER, tempX*TILE_SIZE_X, tempY*TILE_SIZE_Y + TILE_SIZE_Y);
+
+	tempX = 1;
+	tempY = 5;
 	tiles[tempX][tempY]->unit = new Unit(Unit::BSOLDIER, tempX*TILE_SIZE_X, tempY*TILE_SIZE_Y + TILE_SIZE_Y);
 
-	tempX = 0;
-	tempY = 1;
+	tempX = 1;
+	tempY = 6;
 	tiles[tempX][tempY]->unit = new Unit(Unit::BSOLDIER, tempX*TILE_SIZE_X, tempY*TILE_SIZE_Y + TILE_SIZE_Y);
 	
-	tempX = 1;
-	tempY = 0;
+	tempX = 2;
+	tempY = 5;
 	tiles[tempX][tempY]->unit = new Unit(Unit::BSOLDIER, tempX*TILE_SIZE_X, tempY*TILE_SIZE_Y + TILE_SIZE_Y);
 	
-	tempX = 1;
-	tempY = 1;
+	tempX = 2;
+	tempY = 6;
+	tiles[tempX][tempY]->unit = new Unit(Unit::BSOLDIER, tempX*TILE_SIZE_X, tempY*TILE_SIZE_Y + TILE_SIZE_Y);
+
+	tempX = 3;
+	tempY = 6;
+	tiles[tempX][tempY]->unit = new Unit(Unit::BSOLDIER, tempX*TILE_SIZE_X, tempY*TILE_SIZE_Y + TILE_SIZE_Y);
+	
+	tempX = 2;
+	tempY = 7;
+	tiles[tempX][tempY]->unit = new Unit(Unit::BSOLDIER, tempX*TILE_SIZE_X, tempY*TILE_SIZE_Y + TILE_SIZE_Y);
+	
+	tempX = 3;
+	tempY = 7;
 	tiles[tempX][tempY]->unit = new Unit(Unit::BSOLDIER, tempX*TILE_SIZE_X, tempY*TILE_SIZE_Y + TILE_SIZE_Y);
 
 
