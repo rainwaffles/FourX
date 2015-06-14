@@ -5,6 +5,7 @@ and may not be redistributed without written permission.*/
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <SDL_mixer.h>
 #include <stdio.h>
 #include <string>
 #include "Texture.h"
@@ -35,6 +36,12 @@ bool loadMedia();
 //Frees media and shuts down SDL
 void close();
 
+//The music that will be played
+Mix_Music *gMusic = NULL;
+
+//The sound effects that will be used
+Mix_Chunk *gSword = NULL;
+
 /*
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;
@@ -59,7 +66,7 @@ bool init()
 	bool success = true;
 
 	//Initialize SDL
-	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
+	if( SDL_Init( SDL_INIT_VIDEO |SDL_INIT_AUDIO ) < 0 )
 	{
 		printf( "SDL could not initialize! SDL Error: %s\n", SDL_GetError() );
 		success = false;
@@ -80,6 +87,13 @@ bool init()
 			printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
 			success = false;
 		}
+
+		if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+		{
+			printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
+			success = false;
+		}
+
 		/*
 		else
 		{
@@ -133,6 +147,14 @@ bool loadMedia()
 {
 	//Loading success flag
 	bool success = true;
+	
+	gSword = Mix_LoadWAV("./sound/swords.wav");
+
+	if (gSword == NULL)
+	{
+		printf("Failed to load swords music! DL_mixer Error: %s\n", Mix_GetError());
+		success = false;
+	}
 
 	//This is where you load images and stuff
 	//success = loadTiles();
@@ -169,7 +191,14 @@ void close()
 		delete mainDialog;
 	}
 
+	Mix_FreeChunk(gSword);
+
+	//Free the music
+	Mix_FreeMusic(gMusic);
+	gMusic = NULL;
+
 	//Quit SDL subsystems
+	Mix_Quit();
 	IMG_Quit();
 	SDL_Quit();
 }
@@ -362,6 +391,7 @@ int main( int argc, char* args[] )
 								}
 								else if(d->getUnit() != NULL && here->oppType() == d->getUnit()->getType())
 								{
+									Mix_PlayChannel(-1, gSword, 0);
 									switch(here->fight(d->getUnit()))
 									{
 									case 0:
