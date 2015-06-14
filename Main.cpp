@@ -377,25 +377,27 @@ int main( int argc, char* args[] )
 										break;
 									case -1:
 										delete mainDialog->getTile()->removeUnit();
-										here->currentSpeed--;
 										break;
 									}
 								}
 							}
-							mainDialog->getTile()->highlight = false;
-						}
-						if (d->getUnit() != NULL)
-						{
-							highlightMovement(d, d->getUnit()->currentSpeed);
 						}
 						if(move)
 						{
+							if(mainDialog->getTile() != NULL)
+							{
+								mainDialog->getTile()->highlight = false;
+							}
 							mainDialog->setTile(d);
 							if(mainDialog->isShown()){mainDialog->focus();}
-							mainDialog->update = true;
-							d->highlight = true;
-							mainMap->update = true;
+							mainDialog->getTile()->highlight = true;
 						}
+						if (mainDialog->getTile()->getUnit() != NULL)
+						{
+							highlightMovement(mainDialog->getTile(), mainDialog->getTile()->getUnit()->currentSpeed);
+						}
+						mainDialog->update = true;
+						mainMap->update = true;
 					}
 					if(e.type == SDL_KEYDOWN)
 					{

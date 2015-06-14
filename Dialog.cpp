@@ -34,6 +34,7 @@ void Dialog::init()
 	background->loadFromFile("./imgs/dialogueBackground.png");
 //	transferT = 0;
 //	transferW = 0;
+	thisTile = NULL;
 }
 
 void Dialog::setTile(Tile* t)

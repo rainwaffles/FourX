@@ -151,7 +151,7 @@ Unit::UnitType Unit::changeType(UnitType newType)
 	case BSOLDIER:
 		maxHealth = 39 + std::rand()%4;
 		power = 12;
-		speed = 3 + std::rand()%1;
+		speed = 3 + std::rand()%2;
 		name = "Blue Soldier";
 		break;
 	}

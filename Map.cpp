@@ -3,7 +3,7 @@
 std::string Map::imgPath = "./imgs/background.png";
 Texture Map::background;
 SDL_Rect* Map::backrect;
-int Map::turnCount = 0;
+int Map::turnCount = 0; //Blue goes first
 
 bool Map::init()
 {
