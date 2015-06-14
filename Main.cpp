@@ -5,6 +5,7 @@ and may not be redistributed without written permission.*/
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <SDL_mixer.h>
 #include <stdio.h>
 #include <string>
 #include "Texture.h"
@@ -35,6 +36,14 @@ bool loadMedia();
 //Frees media and shuts down SDL
 void close();
 
+//The music that will be played
+Mix_Music *gMusic = NULL;
+
+//The sound effects that will be used
+Mix_Chunk *gSword = NULL;
+Mix_Chunk *gMovement = NULL;
+Mix_Chunk *gNextTurn = NULL;
+
 /*
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;
@@ -59,7 +68,7 @@ bool init()
 	bool success = true;
 
 	//Initialize SDL
-	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
+	if( SDL_Init( SDL_INIT_VIDEO |SDL_INIT_AUDIO ) < 0 )
 	{
 		printf( "SDL could not initialize! SDL Error: %s\n", SDL_GetError() );
 		success = false;
@@ -80,6 +89,13 @@ bool init()
 			printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
 			success = false;
 		}
+
+		if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+		{
+			printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
+			success = false;
+		}
+
 		/*
 		else
 		{
@@ -133,6 +149,38 @@ bool loadMedia()
 {
 	//Loading success flag
 	bool success = true;
+	
+	gMusic = Mix_LoadMUS("./sound/music.mp3");
+
+	if (gMusic == NULL)
+	{
+		printf("Failed to load music music! SDL_mixer Error: %s\n", Mix_GetError());
+		success = false;
+	}
+
+	gSword = Mix_LoadWAV("./sound/swords.wav");
+
+	if (gSword == NULL)
+	{
+		printf("Failed to load swords music! DL_mixer Error: %s\n", Mix_GetError());
+		success = false;
+	}
+
+	gMovement = Mix_LoadWAV("./sound/movement.wav");
+
+	if (gMovement == NULL)
+	{
+		printf("Failed to load movement music! DL_mixer Error: %s\n", Mix_GetError());
+		success = false;
+	}
+
+	gNextTurn= Mix_LoadWAV("./sound/nextTurn.wav");
+
+	if (gNextTurn == NULL)
+	{
+		printf("Failed to load movement music! DL_mixer Error: %s\n", Mix_GetError());
+		success = false;
+	}
 
 	//This is where you load images and stuff
 	//success = loadTiles();
@@ -169,7 +217,18 @@ void close()
 		delete mainDialog;
 	}
 
+	Mix_FreeChunk(gSword);
+	Mix_FreeChunk(gNextTurn);
+	Mix_FreeChunk(gMovement);
+	gSword = NULL;
+	gNextTurn = NULL;
+	gMovement = NULL;
+	//Free the music
+	Mix_FreeMusic(gMusic);
+	gMusic = NULL;
+
 	//Quit SDL subsystems
+	Mix_Quit();
 	IMG_Quit();
 	SDL_Quit();
 }
@@ -298,6 +357,11 @@ int main( int argc, char* args[] )
 					
 					bool unitMove = false;
 					
+					if (Mix_PlayingMusic() == 0)
+					{
+						Mix_PlayMusic(gMusic, -1);
+					}
+
 					if(e.type == SDL_KEYDOWN && mainDialog != NULL)
 					{
 						switch( e.key.keysym.sym )
@@ -337,6 +401,7 @@ int main( int argc, char* args[] )
 							curTurn = static_cast<Unit::UnitType>(Map::turnCount%2);
 							if (mainDialog->getTile()->getUnit() != NULL && mainDialog->getTile()->getUnit()->getType() == curTurn)
 							{ highlightMovement(mainDialog->getTile(), mainDialog->getTile()->getUnit()->currentSpeed); }
+							Mix_PlayChannel(-1, gNextTurn, 0);
 							break;
 						}
 					}
@@ -369,9 +434,11 @@ int main( int argc, char* args[] )
 									here->currentSpeed--;
 									d->addUnit(here);
 									move = true;
+									Mix_PlayChannel(-1, gMovement, 0);
 								}
 								else if(d->getUnit() != NULL && here->oppType() == d->getUnit()->getType())
 								{
+									Mix_PlayChannel(-1, gSword, 0);
 									switch(here->fight(d->getUnit()))
 									{
 									case 0:
@@ -454,7 +521,7 @@ int main( int argc, char* args[] )
 	}
 
 	//Free resources and close SDL
-	//SDL_Delay( 2000 );
+	SDL_Delay( 2000 );
 
 	close();
 
