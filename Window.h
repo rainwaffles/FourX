@@ -55,8 +55,8 @@ class Window
 		SDL_Renderer* mRenderer;
 		int mWindowID;
 
-		static const int SCREEN_WIDTH = 640;
-		static const int SCREEN_HEIGHT = 80;
+		static const int SCREEN_WIDTH = 160;
+		static const int SCREEN_HEIGHT = 640;
 
 
 		//Window dimensions

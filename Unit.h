@@ -12,9 +12,18 @@ class Unit
 {
 public:
 	//Constructor
+	enum UnitType
+	{
+		RSOLDIER,
+		RWORKER,
+		BSOLDIER,
+		BWORKER,
+		NONE
+	};	
+	
 	Unit();
-	Unit(int t, SDL_Renderer* rend, int x, int y);
-	Unit(int t, int x, int y);
+	Unit(UnitType t, SDL_Renderer* rend, int x, int y);
+	Unit(UnitType t, int x, int y);
 
 	//Deconstructor, calls free()
 	~Unit();
@@ -34,23 +43,19 @@ public:
 	int setX(int newX);
 	int setY(int newY);
 
-	int changeType(int newType);
-
-	int getType();
 
 	void newTurn();
 
 	static void setClips();
 
-	enum UnitType
-	{
-		RSOLDIER,
-		RWORKER,
-		BSOLDIER,
-		BWORKER
-	};
+
 
 	std::string name;
+
+	UnitType oppType();
+	int fight(Unit *enemy);
+	UnitType getType();
+	UnitType changeType(UnitType newType);
 
 	int health;
 	int power;
@@ -66,7 +71,7 @@ private:
 
 	int posX, posY;
 	static int width, height;
-	int type;
+	UnitType type;
 
 	Uint8 r[3], g[3], b[3], a;
 };

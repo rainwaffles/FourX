@@ -30,9 +30,9 @@ Tile::Tile(int x, int y) : posX(x), posY(y), highlight(false), movement(false)
 	g[0] = 0;
 	b[0] = 0;
 
-	r[1] = 0;
-	g[1] = 255;
-	b[1] = 0;
+	r[1] = 100;
+	g[1] = 100;
+	b[1] = 100;
 
 	r[2] = 0;
 	g[2] = 0;
@@ -84,6 +84,12 @@ void Tile::render()
 	if(unit != NULL)
 	{
 		unit->render();
+		if(unit->currentSpeed <= 0)
+		{
+			tTex.setColor(r[1], g[1], b[1]);
+			tTex.setAlpha(255*.6);
+			Tile::tTex.render(posX, posY);
+		}
 		//printf("IDK\n");
 		/*
 		unit->changeType(Unit::WORKER); 
@@ -93,14 +99,14 @@ void Tile::render()
 		*/
 	}
 
+	if(grid)
+	{
+		Tile::grd.render(posX, posY);
+	}
 	
 	if(highlight)
 	{
 		Tile::hl.render(posX, posY);
-	}
-	if(grid)
-	{
-		Tile::grd.render(posX, posY);
 	}
 }
 

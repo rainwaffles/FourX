@@ -12,10 +12,10 @@ int Unit::height = 30;
 
 Unit::Unit()
 {
-	Unit(0, 0, 0);
+	Unit(NONE, 0, 0);
 }
 
-Unit::Unit(int t, SDL_Renderer* rend, int x, int y)
+Unit::Unit(UnitType t, SDL_Renderer* rend, int x, int y)
 {
 	Unit(t, x, y);
 //	Unit::renderer = rend;
@@ -23,7 +23,7 @@ Unit::Unit(int t, SDL_Renderer* rend, int x, int y)
 	setRenderer(rend);
 }
 
-Unit::Unit(int t, int x, int y) : posX(x), posY(y), health(0), power(0), speed(0), currentSpeed(0), name("")
+Unit::Unit(UnitType t, int x, int y) : posX(x), posY(y), health(0), power(0), speed(0), currentSpeed(0), name("")
 {
 	changeType(t);
 	Unit::instances++;
@@ -145,11 +145,10 @@ void Unit::newTurn()
 	Unit::currentSpeed = speed;
 }
 
-int Unit::changeType(int newType)
+Unit::UnitType Unit::changeType(UnitType newType)
 {
-	int temp = type;
+	UnitType temp = type;
 	type = newType;
-
 
 	switch (type)
 	{
@@ -171,7 +170,24 @@ int Unit::changeType(int newType)
 
 }
 
-int Unit::getType()
+Unit::UnitType Unit::getType()
 {
 	return type;
+}
+
+Unit::UnitType Unit::oppType()
+{
+	if(getType() == RSOLDIER){return BSOLDIER;}
+	if(getType() == BSOLDIER){return RSOLDIER;}
+	return NONE;
+}
+
+int Unit::fight(Unit *enemy)
+{
+	/*
+	1: win
+	0: tie
+	-1: loss
+	*/
+	return 1;
 }

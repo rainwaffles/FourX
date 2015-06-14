@@ -219,6 +219,8 @@ int main( int argc, char* args[] )
 
 			//Event handler
 			SDL_Event e;
+			
+			mainMap->nextTurn();
 
 			//While application is running
 			while( !quit && mainMap->close != true)
@@ -343,33 +345,38 @@ int main( int argc, char* args[] )
 						else
 						{
 
-							Unit* unit = mainDialog->getTile()->getUnit();
+							Unit* here = mainDialog->getTile()->getUnit();
 
-							if (unit != NULL)
+							if (unitMove && here != NULL)
 							{
 
-								if (unit->currentSpeed > 0)
+								if (here->currentSpeed > 0 && d->getUnit() == NULL)
 								{
 									
-									if (unitMove && d->getUnit() == NULL)
-									{
-										mainDialog->getTile()->removeUnit();
-										unit->setX(d->getX());
-										unit->setY(d->getY());
-										unit->currentSpeed--;
-										d->addUnit(unit);
-									}
-									mainMap->update = true;
-									mainDialog->update = true;
-									
+									mainDialog->getTile()->removeUnit();
+									here->setX(d->getX());
+									here->setY(d->getY());
+									here->currentSpeed--;
+									d->addUnit(here);
 								}
-
+								else if(d->getUnit() != NULL && here->oppType() == d->getUnit()->getType())
+								{
+									switch(here->fight(d->getUnit()))
+									{
+									case 0:
+										break;
+									case 1:
+										break;
+									case -1:
+										break;
+									}
+								}
 							}
 							mainDialog->getTile()->highlight = false;
-							if (d->getUnit() != NULL)
-							{
-								highlightMovement(d, d->getUnit()->currentSpeed);
-							}
+						}
+						if (d->getUnit() != NULL)
+						{
+							highlightMovement(d, d->getUnit()->currentSpeed);
 						}
 						mainDialog->setTile(d);
 						if(mainDialog->isShown()){mainDialog->focus();}
