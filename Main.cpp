@@ -518,7 +518,7 @@ int main( int argc, char* args[] )
 	}
 
 	//Free resources and close SDL
-	SDL_Delay( 2000 );
+	//SDL_Delay( 2000 );
 
 	close();
 
