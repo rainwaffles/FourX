@@ -428,11 +428,8 @@ int main( int argc, char* args[] )
 
 								if (d->getUnit() == NULL)
 								{
-									mainDialog->getTile()->removeUnit();
-									here->setX(d->getX());
-									here->setY(d->getY());
-									here->currentSpeed--;
-									d->addUnit(here);
+									//mainDialog->getTile()->removeUnit();
+									Tile::moveUnit(mainDialog->getTile(), d);
 									move = true;
 									Mix_PlayChannel(-1, gMovement, 0);
 								}

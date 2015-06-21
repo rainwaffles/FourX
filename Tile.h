@@ -79,6 +79,10 @@ class Tile
 
 		int citySize;
 */
+		
+		//move units
+		static Unit* moveUnit(Tile* t1, Tile* t2);
+		
 		Unit *unit;
 
 		Unit* getUnit();

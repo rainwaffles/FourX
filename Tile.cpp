@@ -168,6 +168,8 @@ Unit* Tile::addUnit(Unit* newUnit)
 	if (newUnit != NULL)
 	{
 		unit = newUnit;
+		unit->setX(posX);
+		unit->setY(posY);
 	}
 	return temp;
 }
@@ -220,6 +222,23 @@ int Tile::changeType(int newType)
 	return temp;
 }
 */
+
+Unit* Tile::moveUnit(Tile* t1, Tile* t2)
+{
+	Unit* u1 = t1->getUnit();
+	Unit* u2 = t2->getUnit();
+
+	if (u1 != NULL && u2 == NULL)
+	{
+		t2->addUnit(t1->removeUnit());
+		t2->getUnit()->currentSpeed--;
+	}
+	else
+	{
+		return NULL;
+	}
+}
+
 bool Tile::handleEvent(SDL_Event* e)
 {
 	if(e->type == SDL_MOUSEBUTTONDOWN)
