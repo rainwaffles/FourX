@@ -1,11 +1,11 @@
 /*This source code copyrighted by Lazy Foo' Productions (2004-2014)
 and may not be redistributed without written permission.*/
 
-//Using SDL, SDL_image, standard IO, and strings
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_ttf.h>
-#include <SDL_mixer.h>
+//Using SDL2/SDL, SDL2/SDL_image, standard IO, and strings
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
 #include <stdio.h>
 #include <string>
 #include "Texture.h"

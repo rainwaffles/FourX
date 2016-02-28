@@ -2,8 +2,8 @@
 #ifndef UNIT_H
 #define UNIT_H
 
-#include <SDL.h>
-#include <SDL_image.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <stdio.h>
 #include <string>
 #include "Texture.h"
@@ -12,7 +12,7 @@ class Unit
 {
 public:
 	//Constructor
-	static enum UnitType
+	enum UnitType
 	{
 		RSOLDIER,
 		BSOLDIER,
